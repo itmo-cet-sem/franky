@@ -1,6 +1,6 @@
 # Franky
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3cf99626afae49d6a01f039322c9c05a)](https://app.codacy.com/app/ITMO-Franky/franky?utm_source=github.com&utm_medium=referral&utm_content=itmo-cet-sem/franky&utm_campaign=Badge_Grade_Settings)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3cf99626afae49d6a01f039322c9c05a)](https://app.codacy.com/app/ITMO-Franky/franky?utm_source=github.com&utm_medium=referral&utm_content=itmo-cet-sem/franky&utm_campaign=Badge_Grade_Settings) [![Build Status](https://travis-ci.com/itmo-cet-sem/franky.svg?branch=dev)](https://travis-ci.com/itmo-cet-sem/franky)
 
 Franky - employee profile aggregator.
 
