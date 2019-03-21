@@ -25,7 +25,7 @@ can be downloaded as pdf-file.
 
 ### Frontend
 
-At first - go in the `fronted` directory and install deps
+At first - go in the `frontend` directory and install deps
 
     cd frontend/
     npm install
