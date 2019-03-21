@@ -1,1 +1,20 @@
-
+dist: trusty
+matrix:
+  include:
+  - language: node_js
+    node_js: 10
+    before_install:
+      - cd frontend/
+    install:
+      - npm install
+    script:
+      - npm run test
+  
+  - language: python
+    python: 3.4
+    before_install:
+      - cd backend/
+    install:
+      - echo "installing python deps"
+    script:
+      - echo "running py tests"
