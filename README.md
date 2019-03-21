@@ -7,8 +7,7 @@ Franky employee profile aggregator
 
 In the `fronted` directory, you can run:
 
-Runs the app in the development mode.
-
+Runs the app in the development mode. Running on `http://localhost:3000/`
     npm start
 
 Builds the app for production to the `build` folder.
