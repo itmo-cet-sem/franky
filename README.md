@@ -25,9 +25,15 @@ can be downloaded as pdf-file.
 
 ### Frontend
 
-In the `fronted` directory you can run:
+At first - go in the `fronted` directory and install deps
+
+    cd frontend/
+    npm install
+
+Then you can:
 
 Runs the app in the development mode. Running on `http://localhost:3000/`
+    
     npm start
 
 Builds the app for production to the `build` folder.
