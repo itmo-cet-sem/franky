@@ -21,4 +21,19 @@ Also job seekers could use Franky as a tool for generating formatted CV.
 Accumulated statistics should be available on a web-page, but it also 
 can be downloaded as pdf-file.
 
+## How to run
 
+### Frontend
+
+In the `fronted` directory you can run:
+
+Runs the app in the development mode. Running on `http://localhost:3000/`
+    npm start
+
+Builds the app for production to the `build` folder.
+
+    npm run build
+
+Launches the test runner in the interactive watch mode.
+
+    npm test
