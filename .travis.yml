@@ -8,6 +8,7 @@ matrix:
     install:
       - npm install
     script:
+      - echo "== RUNNING FRONTEND TESTS =="
       - npm run test
   
   - language: python
@@ -15,6 +16,7 @@ matrix:
     before_install:
       - cd backend/
     install:
-      - echo "installing python deps"
+      - python -m pip install -r requirements.txt
     script:
-      - echo "running py tests"
+      - echo "== RUNNING BACKEND TESTS =="
+      - pytest
