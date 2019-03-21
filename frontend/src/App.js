@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import Test from './components/Test/Test';
+import store from './store';
 import logo from './logo.svg';
 import './App.css';
 
@@ -9,17 +12,12 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            Welcome to Franky App.
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
         </header>
+        <Provider store={store}>
+          <Test/>
+        </Provider>
       </div>
     );
   }
