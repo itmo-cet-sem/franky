@@ -25,6 +25,10 @@ can be downloaded as pdf-file.
 
 ### Frontend
 
+Requirements:
+* nodejs 8+ (recommend 10 LTS)
+* npm 6+ 
+
 At first - go in the `frontend` directory and install deps
 
     cd frontend/
