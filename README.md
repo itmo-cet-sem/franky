@@ -1,4 +1,7 @@
 # Franky
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3cf99626afae49d6a01f039322c9c05a)](https://app.codacy.com/app/ITMO-Franky/franky?utm_source=github.com&utm_medium=referral&utm_content=itmo-cet-sem/franky&utm_campaign=Badge_Grade_Settings)
+
 Franky - employee profile aggregator.
 
 ## General concept
