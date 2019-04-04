@@ -1,0 +1,20 @@
+version: '3.3'
+ 
+services:
+  frankyapp:
+    build:
+      context:  ./
+      dockerfile: Dockerfile-frankyapp
+    expose:
+      - "5000"
+    deploy:
+      mode: replicated
+      replicas: 2
+  nginx:
+    build:
+      context:  ./
+      dockerfile: Dockerfile-nginx
+    ports:
+      - "80:80"
+    links:
+      - frankyapp
