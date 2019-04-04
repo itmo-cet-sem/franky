@@ -1,0 +1,22 @@
+# **
+# * Build fronted
+# **
+FROM node:10-alpine as react
+
+# RUN useradd -r runner
+# USER runner
+
+WORKDIR /home/runner/franky/frontend
+COPY ./frontend/package.json ./frontend/package-lock.json ./
+RUN npm install
+COPY ./frontend ./
+RUN npm run build
+
+# **
+# * Configure nginx for static
+# **
+FROM nginx:stable-alpine
+COPY --from=react /home/runner/franky/frontend/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
