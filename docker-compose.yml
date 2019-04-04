@@ -7,9 +7,6 @@ services:
       dockerfile: Dockerfile-frankyapp
     expose:
       - "5000"
-    deploy:
-      mode: replicated
-      replicas: 2
   nginx:
     build:
       context:  ./
