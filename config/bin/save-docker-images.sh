@@ -1,9 +1,10 @@
 #!/bin/bash
 
-docker_stack_yml="$(dirname "${BASH_SOURCE[0]}")/../../docker-stack.yml"
+docker_stack_yml_file="$(dirname "${BASH_SOURCE[0]}")/../../docker-stack.yml"
+services_img_file="$(dirname "${BASH_SOURCE[0]}")/../../services.img"
 
-for img in $(cat $docker_stack_yml | awk '{if ($1 == "image:") print $2;}'); do
+for img in $(awk '{if ($1 == "image:") print $2;}' < $docker_stack_yml_file); do
 	  images="$images $img"
 done
 
-docker save -o services.img $images
+docker save -o $services_img_file $images
