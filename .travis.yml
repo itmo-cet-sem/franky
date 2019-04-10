@@ -18,5 +18,5 @@ matrix:
     install:
       - python -m pip install -r requirements.txt
     script:
-      - echo "== RUNNING BACKEND UNIT TESTS =="
-      - pytest tests/unit
+      - echo "== RUNNING BACKEND TESTS =="
+      - pytest
