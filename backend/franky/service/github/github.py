@@ -1,19 +1,12 @@
 import json
-import operator
 import os
 from datetime import datetime, timedelta
-from functools import reduce
-from typing import Optional
 
 import jwt
 import requests
 
 from model import UserData
 from service import Service
-
-
-class GitHubException(RuntimeError):
-    pass
 
 
 class GitHub(Service):
@@ -27,61 +20,34 @@ class GitHub(Service):
         self._private_path = private_path or os.environ['GITHUB_PRIVATE_PATH']
         self._token = None
 
-    def user(self, user_name) -> Optional[UserData]:
-        cursor = None
-        page_size = 10
-        datas = []
-        while True:
-            request_payload = {
-                'query': '''
-                    query { 
-                      user(login: "%(user_name)s") {
-                        name
-                        login
-                        repositories(after: %(cursor)s, first: %(page_size)s) {
-                          totalCount
-                          pageInfo {
-                            endCursor
-                          }
+    def user(self, user_name) -> UserData:
+        request_payload = {
+            'query': '''
+                query { 
+                  user(login: "%s") {
+                    name
+                    login
+                    repositories(last: 10) {
+                      nodes {
+                        languages(last: 10) {
                           nodes {
-                            languages(first: %(page_size)s) {
-                              nodes {
-                                name
-                              }
-                            }
+                            name
                           }
                         }
                       }
                     }
-                ''' % {
-                    'user_name': user_name,
-                    'cursor': ('\"%s\"' % cursor) if cursor else 'null',
-                    'page_size': page_size
+                  }
                 }
-            }
-            response_data = self._call(request_payload)
-            response_user = response_data['user']
-            login = response_user['login']
-            name = response_user['name']
-            languages = list(set(language['name']
-                                 for repository in response_user['repositories']['nodes']
-                                 for language in repository['languages']['nodes']))
-            datas.append(UserData(login=login, name=name, languages=languages))
-            cursor = response_user['repositories']['pageInfo']['endCursor']
-            if not cursor:
-                break
-        if datas:
-            languages = reduce(operator.add, [data.languages for data in datas])
-            return UserData(login=datas[0].login, name=datas[0].name, languages=languages)
-        else:
-            return None
-
-    def _call(self, request_payload):
+            ''' % user_name
+        }
         response_json = self._call_graphql(request_payload)
-        if 'errors' in response_json:
-            raise GitHubException('GraphQL call ended up in an error: %s'
-                                  % json.dumps(response_json['errors'], indent=4))
-        return response_json['data']
+        response_user = response_json['data']['user']
+        login = response_user.get('login')
+        name = response_user.get('name')
+        languages = list(set(language['name']
+                             for repository in response_user['repositories']['nodes']
+                             for language in repository['languages']['nodes']))
+        return UserData(login=login, name=name, languages=languages)
 
     def _call_graphql(self, data) -> dict:
         response = requests.post(self._graphql_endpoint, data=json.dumps(data), headers=self._headers())

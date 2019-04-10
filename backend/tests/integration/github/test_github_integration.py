@@ -1,5 +1,5 @@
 import pytest
-from service import GitHub, GitHubException
+from franky.service import GitHub
 
 
 @pytest.fixture(scope='module')
@@ -12,8 +12,3 @@ def test_github_returns_user_metadata(github):
     assert user.name
     assert user.login
     assert user.languages
-
-
-def test_github_fails_if_user_does_not_exists(github):
-    with pytest.raises(GitHubException):
-        github.user('')
