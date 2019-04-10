@@ -1,4 +1,4 @@
-from franky.server import ping
+from server import ping
 
 
 def test_ping_response():
