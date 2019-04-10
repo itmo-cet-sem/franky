@@ -83,3 +83,30 @@ Run backend server on http://localhost:5000 and test the [ping endpoint](http://
     
     [WINDOWS]
     python franky\server.py
+
+### Run with Docker
+
+As nginx proxy in development. Open `127.0.0.1`
+
+    # Copy development config
+    cp config/nginx/nginx.dev.conf config/nginx/nginx.conf
+    # Build docker image
+    docker build -t franky-static -f Dockerfile-nginx .
+    # Run nginx server
+    docker run -p 80:80 --network=host franky-static
+
+As stage server
+
+    # Init cluster
+    docker swarm init
+    # Copy development config
+    cp config/nginx/nginx.prod.conf config/nginx/nginx.conf
+    # Build images
+    docker-compose build
+    # Run containers
+    docker stack deploy --compose-file docker-stack.yml franky
+
+As production
+
+    to be continued
+     

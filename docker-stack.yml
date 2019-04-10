@@ -1,10 +1,5 @@
-# docker swarm init(once)
-# cp config/nginx/nginx.prod.conf config/nginx/nginx.conf
-# docker-compose build
-# docker stack deploy --compose-file docker-stack.yml franky
-
 version: '3.3'
- 
+
 services:
   frankyapp:
     image: franky_frankyapp:latest
@@ -14,7 +9,7 @@ services:
       - "5000"
     deploy:
       mode: replicated
-      replicas: 2 
+      replicas: 2
   nginx:
     networks:
       main:
