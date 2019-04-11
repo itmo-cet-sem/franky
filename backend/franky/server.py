@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/ping')
 def ping():
-    return 'From franky with ping!'
+    return 'From franky with ping! Test deploy'
 
 
 docker_host=os.getenv('DOCKER_NETWORK_HOST') or '0.0.0.0'
