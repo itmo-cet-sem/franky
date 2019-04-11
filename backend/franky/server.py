@@ -1,6 +1,8 @@
 from flask import Flask
 from service import GitHub
 from utils import json_endpoint
+import os
+from flask import Flask
 
 app = Flask(__name__)
 

@@ -55,6 +55,7 @@ Launches the test runner in the interactive watch mode.
 
 > Python 3.6
 
+
 The following commands should be performed in `backend` directory.
 
 The proper way to develop franky is to use virtualenv:
@@ -68,6 +69,7 @@ After the virtual environment is activated all the required packages can be inst
 
     python -m pip install -r requirements.txt
     
+
 Run unit tests using `pytest` command:
 
     export PYTHONPATH=$PYTHONPATH:$PWD/franky
@@ -94,3 +96,42 @@ Several environment variables are required for running the application and integ
 | GITHUB_APP_ID | GitHub App Id. |
 | GITHUB_PRIVATE_PATH | Path to a GitHub App private key file. |
 | GITHUB_INSTALLATION | GitHub App Installation id. |
+
+Run all test using `pytest` command:
+
+    pytest
+
+Run backend server on http://localhost:5000 and test the [ping endpoint](http://localhost:5000/ping):
+
+    [LINUX]
+    python franky/server.py
+    
+    [WINDOWS]
+    python franky\server.py
+
+### Run with Docker
+
+As nginx proxy in development. Open `127.0.0.1`
+
+    # Copy development config
+    cp config/nginx/nginx.dev.conf config/nginx/nginx.conf
+    # Build docker image
+    docker build -t franky-static -f Dockerfile-nginx .
+    # Run nginx server
+    docker run -p 80:80 --network=host franky-static
+
+As stage server
+
+    # Init cluster
+    docker swarm init
+    # Copy development config
+    cp config/nginx/nginx.prod.conf config/nginx/nginx.conf
+    # Build images
+    docker-compose build
+    # Run containers
+    docker stack deploy --compose-file docker-stack.yml franky
+
+As production
+
+    to be continued...
+     
