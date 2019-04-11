@@ -12,7 +12,7 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Welcome to Franky App.
+            Welcome to Franky App. ДЕПЛОЙ!!!!!!
           </p>
         </header>
         <Provider store={store}>
