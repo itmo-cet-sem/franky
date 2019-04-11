@@ -6,6 +6,7 @@ FROM base as builder
 RUN mkdir /install
 WORKDIR /install
 COPY ./backend/requirements.txt /requirements.txt
+RUN apk add --no-cache --virtual .build-deps gcc musl-dev openssl-dev libffi-dev
 RUN pip install --install-option="--prefix=/install" -r /requirements.txt
 
 # **
