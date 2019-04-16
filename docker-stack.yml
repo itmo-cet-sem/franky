@@ -3,6 +3,8 @@ version: '3'
 services:
   frankyapp:
     image: franky_frankyapp:latest
+    env_file:
+      - .env
     networks:
       main:
     expose:

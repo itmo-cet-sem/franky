@@ -6,6 +6,8 @@ services:
     build:
       context:  ./
       dockerfile: Dockerfile-frankyapp
+    env_file:
+      - .env
     expose:
       - "5000"
   nginx:
