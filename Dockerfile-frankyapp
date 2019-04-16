@@ -1,0 +1,27 @@
+# **
+# * Caching pip deps
+# **
+FROM python:3.6-alpine as base
+FROM base as builder
+RUN mkdir /install
+WORKDIR /install
+COPY ./backend/requirements.txt /requirements.txt
+RUN apk add --no-cache --virtual .build-deps gcc musl-dev openssl-dev libffi-dev
+RUN pip install --install-option="--prefix=/install" -r /requirements.txt
+
+# **
+# * Build python server
+# **
+FROM base
+
+RUN adduser -S runner
+USER runner
+
+ENV DOCKER_NETWORK_HOST=0.0.0.0
+
+COPY --from=builder /install /usr/local
+COPY ./backend /home/runner/franky/backend
+WORKDIR /home/runner/franky/backend
+EXPOSE 5000
+CMD ["python", "franky/server.py"]
+

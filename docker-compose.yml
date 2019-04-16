@@ -1,0 +1,19 @@
+version: '3.3'
+ 
+services:
+  frankyapp:
+    image: franky_frankyapp
+    build:
+      context:  ./
+      dockerfile: Dockerfile-frankyapp
+    expose:
+      - "5000"
+  nginx:
+    image: franky_nginx
+    build:
+      context:  ./
+      dockerfile: Dockerfile-nginx
+    ports:
+      - "80:80"
+    links:
+      - frankyapp

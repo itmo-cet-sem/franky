@@ -82,6 +82,7 @@ Run backend server on http://localhost:5000 and test the [ping endpoint](http://
 
     python franky/server.py
 
+    
 #### GitHub
 
 GitHub integration requires a GitHub App to be created. Franky uses GitHub app installation authorization to request
@@ -94,3 +95,42 @@ Several environment variables are required for running the application and integ
 | GITHUB_APP_ID | GitHub App Id. |
 | GITHUB_PRIVATE_PATH | Path to a GitHub App private key file. |
 | GITHUB_INSTALLATION | GitHub App Installation id. |
+
+### Run with Docker
+
+As nginx proxy in development. Open `127.0.0.1`
+
+    # Copy development config
+    cp config/nginx/nginx.dev.conf config/nginx/nginx.conf
+    
+    # Build docker image
+    docker build -t franky-static -f Dockerfile-nginx .
+    
+    # Run nginx server
+    docker run -p 80:80 --network=host franky-static
+
+As testing with `docker-compose`
+
+    # Copy development config
+    cp config/nginx/nginx.dev.conf config/nginx/nginx.conf
+    
+    # Run with docker-compose
+    docker-compose up --build 
+
+As stage server
+
+    # Init cluster
+    docker swarm init
+    
+    # Copy prod config
+    cp config/nginx/nginx.prod.conf config/nginx/nginx.conf
+    
+    # Build images
+    docker-compose build
+    
+    # Run containers
+    docker stack deploy --compose-file docker-stack.yml franky
+
+As production
+
+    to be continued...
