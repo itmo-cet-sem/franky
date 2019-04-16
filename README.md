@@ -117,7 +117,6 @@ As testing with `docker-compose`
     # Run with docker-compose
     docker-compose up --build 
 
-
 As stage server
 
     # Init cluster
@@ -135,4 +134,3 @@ As stage server
 As production
 
     to be continued...
-
