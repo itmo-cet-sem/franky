@@ -81,9 +81,7 @@ Run unit tests using `pytest` command:
 Run backend server on http://localhost:5000 and test the [ping endpoint](http://localhost:5000/ping):
 
     python franky/server.py
-    
-    [WINDOWS]
-    python franky\server.py
+
     
 #### GitHub
 
@@ -104,19 +102,33 @@ As nginx proxy in development. Open `127.0.0.1`
 
     # Copy development config
     cp config/nginx/nginx.dev.conf config/nginx/nginx.conf
+    
     # Build docker image
     docker build -t franky-static -f Dockerfile-nginx .
+    
     # Run nginx server
     docker run -p 80:80 --network=host franky-static
+
+As testing with `docker-compose`
+
+    # Copy development config
+    cp config/nginx/nginx.dev.conf config/nginx/nginx.conf
+    
+    # Run with docker-compose
+    docker-compose up --build 
+
 
 As stage server
 
     # Init cluster
     docker swarm init
-    # Copy development config
+    
+    # Copy prod config
     cp config/nginx/nginx.prod.conf config/nginx/nginx.conf
+    
     # Build images
     docker-compose build
+    
     # Run containers
     docker stack deploy --compose-file docker-stack.yml franky
 
