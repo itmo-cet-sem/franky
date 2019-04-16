@@ -55,34 +55,48 @@ Launches the test runner in the interactive watch mode.
 
 > Python 3.6
 
-The following command should be performed in `backend` directory.
+The following commands should be performed in `backend` directory.
 
 The proper way to develop franky is to use virtualenv:
 
     python -m pip install virtualenv
     python -m virtualenv .env
     
-    [LINUX]
     source .env/bin/activate
-    
-    [WINDOWS]
-    .env\Scripts\activate
 
 After the virtual environment is activated all the required packages can be installed:
 
     python -m pip install -r requirements.txt
     
-Run all test using `pytest` command:
+Run unit tests using `pytest` command:
 
-    pytest
+    export PYTHONPATH=$PYTHONPATH:$PWD/franky
+    pytest tests/unit
+    
+Run unit tests using `pytest` command:
+
+    export PYTHONPATH=$PYTHONPATH:$PWD/franky
+    pytest tests/integration
 
 Run backend server on http://localhost:5000 and test the [ping endpoint](http://localhost:5000/ping):
 
-    [LINUX]
     python franky/server.py
     
     [WINDOWS]
     python franky\server.py
+    
+#### GitHub
+
+GitHub integration requires a GitHub App to be created. Franky uses GitHub app installation authorization to request
+GraphQL API.
+
+Several environment variables are required for running the application and integration tests.
+
+| Variable | Description |
+| -------- | ----------- |
+| GITHUB_APP_ID | GitHub App Id. |
+| GITHUB_PRIVATE_PATH | Path to a GitHub App private key file. |
+| GITHUB_INSTALLATION | GitHub App Installation id. |
 
 ### Run with Docker
 
@@ -109,4 +123,4 @@ As stage server
 As production
 
     to be continued...
-     
+

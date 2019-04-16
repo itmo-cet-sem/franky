@@ -15,8 +15,9 @@ matrix:
     python: 3.6
     before_install:
       - cd backend/
+      - export PYTHONPATH=$PYTHONPATH:$PWD/franky
     install:
       - python -m pip install -r requirements.txt
     script:
-      - echo "== RUNNING BACKEND TESTS =="
-      - pytest
+      - echo "== RUNNING BACKEND UNIT TESTS =="
+      - pytest tests/unit
