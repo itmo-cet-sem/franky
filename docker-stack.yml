@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  frankyapp:
+    image: franky_frankyapp:latest
+    env_file:
+      - .env
+    networks:
+      main:
+    expose:
+      - "5000"
+    deploy:
+      mode: replicated
+      replicas: 2
+  nginx:
+    networks:
+      main:
+    image: franky_nginx:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - frankyapp
+networks:
+  main:

@@ -1,0 +1,23 @@
+dist: trusty
+matrix:
+  include:
+  - language: node_js
+    node_js: 10
+    before_install:
+      - cd frontend/
+    install:
+      - npm install
+    script:
+      - echo "== RUNNING FRONTEND TESTS =="
+      - npm run test
+  
+  - language: python
+    python: 3.6
+    before_install:
+      - cd backend/
+      - export PYTHONPATH=$PYTHONPATH:$PWD/franky
+    install:
+      - python -m pip install -r requirements.txt
+    script:
+      - echo "== RUNNING BACKEND UNIT TESTS =="
+      - pytest tests/unit
