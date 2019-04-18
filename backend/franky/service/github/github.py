@@ -81,6 +81,9 @@ class GitHub(Service):
         if 'errors' in response_json:
             raise GitHubException('GraphQL call ended up in an error: %s'
                                   % json.dumps(response_json['errors'], indent=4))
+        if 'data' not in response_json:
+            raise GitHubException('GraphQL response does not have a body: %s'
+                                  % json.dumps(response_json, indent=4))
         return response_json['data']
 
     def _call_graphql(self, data) -> dict:
