@@ -3,12 +3,13 @@ import operator
 import os
 from datetime import datetime, timedelta
 from functools import reduce
-from typing import Optional
+from typing import Optional, List
 
 import jwt
 import requests
 
 from model import UserData
+from model.project import ProjectData
 from service import Service
 
 
@@ -20,16 +21,27 @@ class GitHub(Service):
 
     def __init__(self, rest_endpoint='https://api.github.com', graphql_endpoint='https://api.github.com/graphql',
                  app_id=None, installation_id=None, private_path=None):
+        """
+        GitHub integrated service.
+
+        :param rest_endpoint: GitHub REST API endpoint.
+        :param graphql_endpoint: GitHub GraphQL API endpoint.
+        :param app_id: Associated GitHub App id.
+        :param installation_id: Associated GitHub App installation id.
+        :param private_path: Associated GitHub App private key path.
+        """
         self._rest_endpoint = rest_endpoint
         self._graphql_endpoint = graphql_endpoint
         self._app_id = app_id or os.environ['GITHUB_APP_ID']
         self._installation_id = installation_id or os.environ['GITHUB_INSTALLATION']
         self._private_path = private_path or os.environ['GITHUB_PRIVATE_PATH']
         self._token = None
+        self._page_size = 10
+        self._date_format = '%Y-%m-%dT%H:%M:%SZ'
+        self._active_projects_period = timedelta(weeks=2)
 
-    def user(self, user_name) -> Optional[UserData]:
+    def user(self, username) -> Optional[UserData]:
         cursor = None
-        page_size = 10
         datas = []
         while True:
             request_payload = {
@@ -39,7 +51,6 @@ class GitHub(Service):
                         name
                         login
                         repositories(after: %(cursor)s, first: %(page_size)s) {
-                          totalCount
                           pageInfo {
                             endCursor
                           }
@@ -54,9 +65,9 @@ class GitHub(Service):
                       }
                     }
                 ''' % {
-                    'user_name': user_name,
+                    'user_name': username,
                     'cursor': ('\"%s\"' % cursor) if cursor else 'null',
-                    'page_size': page_size
+                    'page_size': self._page_size
                 }
             }
             response_data = self._call(request_payload)
@@ -76,7 +87,58 @@ class GitHub(Service):
         else:
             return None
 
-    def _call(self, request_payload):
+    def projects(self, username: str) -> List[ProjectData]:
+        cursor = None
+        datas = []
+        while True:
+            request_payload = {
+                'query': '''
+                    query { 
+                      user(login: "%(user_name)s") {
+                        repositories(after: %(cursor)s, first: %(page_size)s) {
+                          pageInfo {
+                            endCursor
+                          }
+                          nodes {
+                            name
+                            createdAt
+                            pushedAt
+                            languages(first: %(page_size)s) {
+                              nodes {
+                                name
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                ''' % {
+                    'user_name': username,
+                    'cursor': ('\"%s\"' % cursor) if cursor else 'null',
+                    'page_size': self._page_size
+                }
+            }
+            response_data = self._call(request_payload)
+            response_user = response_data['user']
+            repositories = response_user['repositories']['nodes']
+            for repository in repositories:
+                raw_creation_date = repository['createdAt']
+                raw_latest_push_date = repository['pushedAt']
+                latest_push_date = self._parse_datetime(raw_latest_push_date)
+                if latest_push_date + self._active_projects_period > datetime.utcnow():
+                    raw_latest_push_date = None
+                tags = list(set(language['name'] for language in repository['languages']['nodes']))
+                datas.append(ProjectData(name=repository['name'], start=raw_creation_date, end=raw_latest_push_date,
+                                         tags=tags))
+            cursor = response_user['repositories']['pageInfo']['endCursor']
+            if not cursor:
+                break
+        return datas
+
+    def _parse_datetime(self, datetime_string) -> datetime:
+        return datetime.strptime(datetime_string, self._date_format)
+
+    def _call(self, request_payload) -> dict:
         response_json = self._call_graphql(request_payload)
         if 'errors' in response_json:
             raise GitHubException('GraphQL call ended up in an error: %s'
@@ -95,7 +157,9 @@ class GitHub(Service):
 
     @property
     def token(self) -> str:
-        return self._token or self._generate_token()
+        if not self._token:
+            self._token = self._generate_token()
+        return self._token
 
     def _generate_token(self) -> str:
         jwt_token = self._generate_jwt()
