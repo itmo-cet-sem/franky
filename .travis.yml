@@ -28,11 +28,11 @@ matrix:
     env:
       - secure: "n9rxdmDua6HsOUqzLAa4LFDSqQY75WwJ3kUZtwmXqx9pYZvHxudrmBb2aoBEsGTdaRymCAmXn8fYbVHduoAiXqIApu9lwfl6AsXPl+zhaZgjPUzswIw4IFAQA4tB9KxMjhiGkYizd1zZvXZHPyRhm3tta/1nZPaYFx+sfn/4hF4PP6ZNu0lleq1EPr3nQ0v46A1tfIAvNpC3jXAe6lMeclVahHkC3KV+q+mbNEOYJt7NBv4qcqcqjKI70xWODkhEI+qPPA8EhUshCo6Q2/v4g4ANpNssxlrcLo2lPtgVzIYmv2qnxQjZNNuffXTgcpea4bTxUXAcfd0RnFjU20wqif3+A9J2QMTFk94YIxGmi1KZ2KJvuJeHGW7PbhUE6WZ74jJVKU3tISw4sEBteGj6jg4aeLVJzS079cQu8M5bWfwClsmtpKLinrsjJOZWizJ+5dUe61YpjX/h4gB4+RxCsrqc0kC9oafKJ6k3UY5v4GKqCvraxxkzSszHHmOjqif7MSeWWPohzBNPWdN3sXQVHpJPk9CZeKzKFGIcn6SQQ4Dcx/xxvMKqYqOEiZsPqsIHa9BLx8PGGSL9jtfdVZPEL8rTXmenCZW/PkDU0cir7ORTVVGyZsNYZTvAaXUB4Eerab9tsSwoWiciCsXTP0Vj3+oPTzJ0hyfKyIyEcXWQkHs="
       - secure: "jz9aCYNg9lqelR3il1w1HnoeECxnqPOzCmPtJRl4oB2I08MSejhQMBaa4Y8D1XCyL+7aaliv65id884L5Clp9iwUp6V+aFKuyT4ZjBLC6M1GPQ0p+GSdYnnRhgHiqSoK3elMwKbK1mQwvjXrO3kI0xFJ98Ep8qRjhHxB/dcnfIjDV6L7RVXvM5WbrSFBMflLCFauvvxZzYSdESmKJEN0GakfK7rhwMAIdfKhlr0I+jlKA+ZRi093xU3KDYyQo3+tTnOF9BnRdtv2HCYuneuCPZ2Tq4iTTPtkpPhmog/AnL2jfAZbV7Fy2BFgqOV+oBPlFt7/7LhxM+boGp581fvbi8fbUlcQpqyjr6mAryGmBx7QbBbKlkMF7Q382bglTg/DjH6MKQ0m5H66H8K9hS1bnVqgGdN4S9dD6ef9iUviSYvdFzP9CGJJPz1oIOq77KJXBTXoZNbOfRdBxCHVDHlcIyDAC65gvHggoqmSYXD/Tt5lYDLSppGt5X5cpojs1OcTniQzILUxX+8CppLlV7wKPc6ZtkRnGmIrovIqxRH0g8eFgWWh3jmQYvhkt6uuVqzn/PpegaxNg3Jh7nONFMGe02ePQLR0iXQI+CbO2BAkqFxFVNG6f8H1ssQnBgqadu/6Xhe71A/VCRqcorK13+HpeBly2C2etFk0UFyneF3Bb34="
-      - GITHUB_PRIVATE_PATH=$PWD/github-app-private-key.pem
+      - GITHUB_PRIVATE_PATH=$TRAVIS_BUILD_DIR/config/github/private-key.pem
     before_install:
       - cd backend/
       - export PYTHONPATH=$PYTHONPATH:$PWD/franky
-      - openssl aes-256-cbc -K $encrypted_42099b4af021_key -iv $encrypted_42099b4af021_iv -in github-app-private-key.pem.enc -out $GITHUB_PRIVATE_PATH -d
+      - openssl aes-256-cbc -K $encrypted_42099b4af021_key -iv $encrypted_42099b4af021_iv -in $TRAVIS_BUILD_DIR/config/github/private-key.pem.enc -out $TRAVIS_BUILD_DIR/config/github/private-key.pem -d
     install:
       - python -m pip install -r requirements.txt
     script:
