@@ -1,6 +1,6 @@
-let initState= { default: true };
+let initState = { default: true };
 
-let testReducer = (state = initState, action) => {
+export default (state = initState, action) => {
   if (action.type === 'TEST') {
     state = {
       test: true
@@ -9,5 +9,3 @@ let testReducer = (state = initState, action) => {
 
   return state;
 };
-
-export default testReducer;
