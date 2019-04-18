@@ -5,7 +5,7 @@ from flask import Flask
 
 from model import UserData
 from model.project import ProjectData
-from service import GitHub
+from service import GitHub, StackOverflow
 from utils import convert_to_json
 
 app = Flask(__name__)
@@ -18,12 +18,17 @@ def ping() -> str:
 
 @app.route('/api/github/<username>', methods=['GET'])
 def github_user(username) -> UserData:
-    return convert_to_json(GitHub().user(username))
+    return GitHub().user(username).to_json()
 
 
 @app.route('/api/github/<username>/projects', methods=['GET'])
 def github_projects(username) -> List[ProjectData]:
-    return convert_to_json(GitHub().projects(username))
+    return GitHub().projects(username).to_json()
+
+
+@app.route('/api/stackoverflow/<username>', methods=['GET'])
+def stackoverflow(username):
+    return StackOverflow().user(username).to_json()
 
 
 if __name__ == '__main__':

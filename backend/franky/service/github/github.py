@@ -77,13 +77,13 @@ class GitHub(Service):
             languages = list(set(language['name']
                                  for repository in response_user['repositories']['nodes']
                                  for language in repository['languages']['nodes']))
-            datas.append(UserData(login=login, name=name, languages=languages))
+            datas.append(UserData(login=login, name=name, tags=languages))
             cursor = response_user['repositories']['pageInfo']['endCursor']
             if not cursor:
                 break
         if datas:
-            languages = reduce(operator.add, [data.languages for data in datas])
-            return UserData(login=datas[0].login, name=datas[0].name, languages=languages)
+            languages = reduce(operator.add, [data.tags for data in datas])
+            return UserData(login=datas[0].login, name=datas[0].name, tags=languages)
         else:
             return None
 
