@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import Test from './components/Test/Test';
+import Observe from './containers/Observe/Observe';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import store from './store';
@@ -12,7 +12,7 @@ class App extends Component {
       <div className="App">
         <Header/> 
         <Provider store={store}>
-          <Test/>
+          <Observe/>
         </Provider>
         <Footer/>
       </div>
