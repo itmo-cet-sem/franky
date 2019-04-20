@@ -14,18 +14,19 @@ export const ERROR_DOCKER_DATA = 'ERROR_DOCKER_DATA';
 
 export const SET_OBSERVABLE_LOGIN = 'SET_OBSERVABLE_LOGIN';
 
-const _getFromGithub = login => dispatch => {
+const _makeRequest = (apiUrl, login, requestType, receiveType, errorType) => dispatch => {
   console.log('getting');
-  return fetch('/api/github/' + login)
+  dispatch({ type: requestType });
+  return fetch(apiUrl + login)
     .then(res => res.json())
     .then(json => dispatch({
-      type: RECEIVE_GITHUB_DATA,
+      type: receiveType,
       data: json
     }))
     .catch(err => {
       console.log(err, 'err');
       dispatch({
-        type: ERROR_GITHUB_DATA,
+        type: errorType,
         message: 'some message'
       });
     });
@@ -38,6 +39,37 @@ export const setLogin = login => ({
 
 export const getFullData = login => dispatch => {
   dispatch(setLogin(login));
-  console.log('get full data');
-  return dispatch(_getFromGithub(login));
+
+  let res = Promise.all([
+    dispatch(
+      _makeRequest(
+        '/api/github/',
+        login,
+        REQUEST_GITHUB_DATA,
+        RECEIVE_GITHUB_DATA,
+        ERROR_GITHUB_DATA
+      )
+    ),
+    // @todo on ready
+    // dispatch(
+    //   _makeRequest(
+    //     '/api/stackoverflow/',
+    //     login,
+    //     REQUEST_STACK_DATA,
+    //     RECEIVE_STACK_DATA,
+    //     ERROR_STACK_DATA
+    //   )
+    // ),
+    // dispatch(
+    //   _makeRequest(
+    //     '/api/dockerhub/',
+    //     login,
+    //     REQUEST_DOCKER_DATA,
+    //     RECEIVE_DOCKER_DATA,
+    //     ERROR_DOCKER_DATA
+    //   )
+    // )
+  ]);
+
+  return res;
 };

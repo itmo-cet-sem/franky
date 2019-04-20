@@ -1,6 +1,7 @@
 import {
   SET_OBSERVABLE_LOGIN,
   RECEIVE_GITHUB_DATA,
+  REQUEST_GITHUB_DATA,
   ERROR_GITHUB_DATA
 } from '../actions/index';
 
@@ -18,6 +19,13 @@ export default (state = initObservableInfo, action) => {
         ...state,
         login: action.login
       };
+    case REQUEST_GITHUB_DATA:
+      return {
+        ...state,
+        github: {
+          isLoading: true
+        }
+      };
     case RECEIVE_GITHUB_DATA: 
       return {
         ...state,
@@ -25,7 +33,8 @@ export default (state = initObservableInfo, action) => {
           ...state.github,
           login: action.data.login,
           name: action.data.name,
-          languages: action.data.languages
+          languages: action.data.languages,
+          isLoading: false
         }
       };
     case ERROR_GITHUB_DATA: 
