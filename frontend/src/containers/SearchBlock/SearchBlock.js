@@ -25,10 +25,17 @@ class SearchBlock extends Component {
       <div className="b-search">
         <input value={this.state.login} onChange={this._onLoginChange} className="b-search__input" />
         <button className="b-search__clear">X</button>
-        <button onClick={this._onSearch} className="b-search__request">search</button>
+        <button 
+          onClick={this._onSearch}
+          disabled={this.props.info.github.isLoading || this.props.info.stackoverflow.isLoading || this.props.info.dockerhub.isLoading}
+          className="b-search__request">
+          search
+        </button>
       </div>
     );
   }
 }
 
-export default connect()(SearchBlock);
+export default connect(
+  state => ({ info: state.observableInfo })
+)(SearchBlock);

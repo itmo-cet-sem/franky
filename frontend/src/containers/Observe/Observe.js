@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SearchBlock from '../SearchBlock/SearchBlock';
+import ActivityInfo from '../ActivityInfo/ActivityInfo';
 
 class Observe extends Component {
 	componentDidMount() {
@@ -19,11 +20,12 @@ class Observe extends Component {
       <div>
         <h3>Try iy now!</h3>
         <SearchBlock />
+        <ActivityInfo />
       </div>
     );
   }
 }
 
 export default connect(
-	state => ({ observableInfo: state.observableInfo, test: state.test })
+	state => ({ info: state.observableInfo, test: state.test })
 )(Observe);

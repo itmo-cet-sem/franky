@@ -50,7 +50,7 @@ export const getFullData = login => dispatch => {
         ERROR_GITHUB_DATA
       )
     ),
-    // @todo on ready
+    // @TODO on ready
     // dispatch(
     //   _makeRequest(
     //     '/api/stackoverflow/',
