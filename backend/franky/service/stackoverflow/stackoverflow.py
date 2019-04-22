@@ -30,10 +30,8 @@ class StackOverflow(Service):
         response_data = self._call(self._user_url, payload)
         data = response_data['items']
 
-        if len(data) > 1:
+        if len(data) >= 1:
             user_id = self._get_unique_user(data, user_name)
-        elif len(data) == 1:
-            user_id = data[0]['user_id']
         else:
             raise StackoverflowServiceException('User not found')
         return str(user_id)
@@ -47,7 +45,7 @@ class StackOverflow(Service):
 
     def _call(self, request_url: str, payload: Dict) -> Dict:
         url = urljoin(self._rest_endpoint, request_url)
-        full_payload = payload
+        full_payload = dict(payload)
         full_payload['site'] = self._service_name
         response = requests.get(url, full_payload)
         return response.json()

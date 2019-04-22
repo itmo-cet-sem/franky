@@ -17,4 +17,4 @@ class UserData:
         self.tags = tags or []
 
     def to_json(self):
-        return json.dumps(self.__dict__)
+        return json.dumps(self.__dict__, ensure_ascii=False).encode('utf8')

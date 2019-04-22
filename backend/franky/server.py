@@ -28,7 +28,8 @@ def github_projects(username) -> List[ProjectData]:
 
 @app.route('/api/stackoverflow/<username>', methods=['GET'])
 def stackoverflow(username):
-    return StackOverflow().user(username).to_json()
+    user = StackOverflow().user(username)
+    return user.to_json()
 
 
 if __name__ == '__main__':
