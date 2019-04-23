@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getFullData } from '../../actions/index';
+import { Paper, InputBase, IconButton, Button } from '@material-ui/core';
+import { Search } from '@material-ui/icons';
 import './SearchBlock.css';
 
 class SearchBlock extends Component {
@@ -22,15 +24,25 @@ class SearchBlock extends Component {
 
   render() {
     return (
-      <div className="b-search">
-        <input value={this.state.login} onChange={this._onLoginChange} className="b-search__input" />
-        <button className="b-search__clear">X</button>
-        <button 
-          onClick={this._onSearch}
-          disabled={this.props.info.github.isLoading || this.props.info.stackoverflow.isLoading || this.props.info.dockerhub.isLoading}
-          className="b-search__request">
-          search
-        </button>
+      <div>
+        <Paper className="b-search" elevation={1}>
+          <InputBase
+            className="b-search__input"
+            placeholder="Type username here"
+            value={this.state.login}
+            onChange={this._onLoginChange}
+          />
+          <Button
+            className="b-search__icon-button"
+            size="medium"
+            color="primary"
+            onClick={this._onSearch}
+            disabled={this.props.info.github.isLoading || this.props.info.stackoverflow.isLoading || this.props.info.dockerhub.isLoading}
+          >
+            <Search />
+            Search
+          </Button>
+        </Paper>
       </div>
     );
   }
