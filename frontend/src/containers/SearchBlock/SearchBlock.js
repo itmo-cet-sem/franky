@@ -8,15 +8,15 @@ class SearchBlock extends Component {
     super(props);
     this.state = {
       login: ''
-    }
+    };
   }
-  _onSearch = event => {
+  _onSearch = (event) => {
     const { dispatch } = this.props;
 
     dispatch(getFullData(this.state.login));
   }
 
-  _onLoginChange = event => {
+  _onLoginChange = (event) => {
     this.setState({ login: event.target.value });
   }
 
@@ -37,5 +37,5 @@ class SearchBlock extends Component {
 }
 
 export default connect(
-  state => ({ info: state.observableInfo })
+  (state0 => ({ info: state.observableInfo })
 )(SearchBlock);

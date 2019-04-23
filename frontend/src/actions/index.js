@@ -14,17 +14,15 @@ export const ERROR_DOCKER_DATA = 'ERROR_DOCKER_DATA';
 
 export const SET_OBSERVABLE_LOGIN = 'SET_OBSERVABLE_LOGIN';
 
-const _makeRequest = (apiUrl, login, requestType, receiveType, errorType) => dispatch => {
-  console.log('getting');
+const _makeRequest = (apiUrl, login, requestType, receiveType, errorType) => (dispatch) => {
   dispatch({ type: requestType });
   return fetch(apiUrl + login)
-    .then(res => res.json())
-    .then(json => dispatch({
+    .then((res) => res.json())
+    .then((json) => dispatch({
       type: receiveType,
       data: json
     }))
-    .catch(err => {
-      console.log(err, 'err');
+    .catch((err) => {
       dispatch({
         type: errorType,
         message: 'some message'
@@ -32,12 +30,12 @@ const _makeRequest = (apiUrl, login, requestType, receiveType, errorType) => dis
     });
 };
 
-export const setLogin = login => ({
+export const setLogin = (login) => ({
   type: SET_OBSERVABLE_LOGIN,
   login
 });
 
-export const getFullData = login => dispatch => {
+export const getFullData = (login) => (dispatch) => {
   dispatch(setLogin(login));
 
   let res = Promise.all([

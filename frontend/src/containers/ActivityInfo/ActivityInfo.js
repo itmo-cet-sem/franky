@@ -37,5 +37,5 @@ class ActivityInfo extends Component {
 }
 
 export default connect(
-  state => ({ info: state.observableInfo })
+  (state) => ({ info: state.observableInfo })
 )(ActivityInfo);
