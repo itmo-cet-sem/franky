@@ -2,14 +2,30 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SearchBlock from '../SearchBlock/SearchBlock';
 import ActivityInfo from '../ActivityInfo/ActivityInfo';
+import { Typography, Grid } from '@material-ui/core';
+import './Observe.css';
 
 class Observe extends Component {
   render() {
     return (
       <div>
-        <h3>Try it now!</h3>
-        <SearchBlock />
-        <ActivityInfo />
+        <Grid container justify="center">
+          <Grid
+            item
+            xs={12}
+            md={10}
+            lg={8}
+            className="observe-wrapper"
+          >
+            <Typography variant="h3" align="center">
+              Try it now!
+            </Typography>
+            <Grid item xs={12} align="center">
+              <SearchBlock />
+            </Grid>
+            <ActivityInfo />
+          </Grid>
+        </Grid>
       </div>
     );
   }
