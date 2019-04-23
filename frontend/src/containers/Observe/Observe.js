@@ -7,7 +7,7 @@ class Observe extends Component {
   render() {
     return (
       <div>
-        <h3>Try iy now!</h3>
+        <h3>Try it now!</h3>
         <SearchBlock />
         <ActivityInfo />
       </div>
