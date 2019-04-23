@@ -37,5 +37,5 @@ class SearchBlock extends Component {
 }
 
 export default connect(
-  (state0 => ({ info: state.observableInfo })
+  (state) => ({ info: state.observableInfo })
 )(SearchBlock);
