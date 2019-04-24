@@ -1,17 +1,18 @@
 dist: trusty
 matrix:
   include:
-  - language: node_js
+  - name: "Frontend tests"
+    language: node_js
     node_js: 10
     before_install:
       - cd frontend/
     install:
       - npm install
     script:
-      - echo "== RUNNING FRONTEND TESTS =="
       - npm run test
-  
-  - language: python
+
+  - name: "Backend unit tests"
+    language: python
     python: 3.6
     before_install:
       - cd backend/
@@ -19,5 +20,20 @@ matrix:
     install:
       - python -m pip install -r requirements.txt
     script:
-      - echo "== RUNNING BACKEND UNIT TESTS =="
       - pytest tests/unit
+
+  - name: "Backend integration tests"
+    language: python
+    python: 3.6
+    env:
+      - secure: "qdl16XoHkRilsOKtQpMkz2eeF5wcMp0mu6ExJ+x+Iuds/lss1WDO/c3qI8/oh4/3Z/Wl4Ttq14UGViKqAZ7sEIzIiRodySK6b/dlikdlZeoctuhc83e8GzthSYyPhURL/19/Ao3wdhebrh+iIJh817hZN+5+mj4Lz4MnQdNO2Mn2JSS715f7q2L3XNbmFNc43lWnOgeTUf05qCgxgZHy/+DDJu4iFlMUFImVukeYXacHYu1Thwx9/8lSFi5gmTiK/etZDotif8WaunwHDUi5L72e8EF0uqh2FDRdHu4xovRj9Hb/C/kOgvRs7ZgdJDratHdLdvO71XmdyK6OsPD1tTVu7VSl7WQowRndxXI75Szk23d0GCsWnLPK3KlJOSrpkowDzoxlJmGyBMSJBzE6S7l2kRikbZ9dXWEcZdPvgZ1E7qlotf+mMpz+MclAdL+9CoxjMsEoZjamNzrrpABZ3l9Bk2hfCSc0fz42ignL5WuW0YMkomPD+mzkocZ+g4IjaDZK7CDAbqZoUOh/qdj8YLj2BSxH/fZ54EgpykytIhpWH4+lTsQaeyKrib16ELheI6jN7Mikol/dnk5L2NhUHVzW7husq7WYW4U4U4GoN22Fosrffr26JyBSCVyHEmvGTllLlkPPvsUCLBhIMnvvK9IeSpEkaosZ5rItYZjz7eY="
+      - secure: "ce5uE7Z3IR8kpPXHu678Z87rLe2o1ImGEIBVbvvUjZjAVup7o7c2Bb7Z29NGkg4SC9n44S74In6gzc3QwaL1MUAtrEIUxyj6zxr33CvA8NhDv2ZXITsCQ0AA3LONpFeB2AqgNhFRCXWFxEjyIHUcFwreF+yEw+DN1709M0UmmKfsZaDmnEjD8seLKkjdlsdPA1MGX7q2KxBqJf9Wb5kuACU0ZjZfKy5c5j5MtdZvuLr7ZR/pkKMG/CMx+Zaj24m02HKpJ4fA9qzAHIcIKeODCiBIeahuD9MjhwTKYLMttYI4gia4bHWla/Pk9DvRfFKPtaZb1WdrvaAeIEcliPxKO97RqpTRdlxt1+BIvbfBT/qYXh4tHGbU5L1Qfo4RKWk3g3FfBCJvyLagh71+W6ty0ht7djKdJ2/w+RQDTQDOTuY2aMinYVKVktaxHHXK/2zvg7IIs7Gr7Ku3OaapLihwF11ErDVHMexf0xQUEV73eN2AIgVKC2bIX+7A7hOy32wOheTScbA1N6ICjF9wzHkj7hlz8D0mtG1Lb9tZLai3ELUHoSMjJWVlChW5cl3yv/Fc0qfM8FbsRHZDF2fF2Nayxdx9p+3odQ3KZTzDyUZqRRrXMjLsYdJXalvDofoVk3Z7Jr7QpFP7WJ19dtBhKA7buWJsspLHg5C3cxahKCHCBnk="
+      - GITHUB_PRIVATE_PATH=$TRAVIS_BUILD_DIR/config/github/private-key.pem
+    before_install:
+      - cd backend/
+      - export PYTHONPATH=$PYTHONPATH:$PWD/franky
+      - openssl aes-256-cbc -K $encrypted_42099b4af021_key -iv $encrypted_42099b4af021_iv -in $TRAVIS_BUILD_DIR/config/github/private-key.pem.enc -out $TRAVIS_BUILD_DIR/config/github/private-key.pem -d
+    install:
+      - python -m pip install -r requirements.txt
+    script:
+      - pytest tests/integration
