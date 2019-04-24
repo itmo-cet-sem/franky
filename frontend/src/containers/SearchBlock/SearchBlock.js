@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getFullData } from '../../actions/index';
+import { getFullData, searchAny } from '../../actions/index';
 import SnackbarAlertContent from '../../components/SnackbarAlertContent/SnackbarAlertContent';
 import { Paper, InputBase, Button, Snackbar, CircularProgress } from '@material-ui/core';
 import { Search as SearchIcon } from '@material-ui/icons';
@@ -12,9 +12,10 @@ class SearchBlock extends Component {
     super(props);
     this.state = {
       login: '',
-      loginErrorOpen: false
+      loginErrorOpen: false,
     };
   }
+
   _onSearch = (event) => {
     const { dispatch } = this.props;
 
@@ -23,8 +24,12 @@ class SearchBlock extends Component {
       return;
     }
 
-    if(this.state.loginErrorOpen) {
+    if (this.state.loginErrorOpen) {
       this.setState({ loginErrorOpen: false });
+    }
+
+    if (!this.props.info.calledSearchAny) {
+      dispatch(searchAny());
     }
 
     dispatch(getFullData(this.state.login));
