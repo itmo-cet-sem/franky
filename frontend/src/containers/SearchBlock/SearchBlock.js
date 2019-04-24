@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getFullData } from '../../actions/index';
-import { Paper, InputBase, IconButton, Button } from '@material-ui/core';
+import { Paper, InputBase, Button } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import './SearchBlock.css';
 
@@ -24,7 +24,6 @@ class SearchBlock extends Component {
 
   render() {
     return (
-      <div>
         <Paper className="b-search" elevation={1}>
           <InputBase
             className="b-search__input"
@@ -43,7 +42,6 @@ class SearchBlock extends Component {
             Search
           </Button>
         </Paper>
-      </div>
     );
   }
 }
