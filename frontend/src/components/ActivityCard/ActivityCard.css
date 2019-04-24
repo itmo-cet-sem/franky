@@ -1,0 +1,10 @@
+.activity-card {
+	height: 100%;
+}
+
+.activity-card .activity-card__logo {
+	width: auto;
+	margin: auto;
+
+	padding: 16px;
+}

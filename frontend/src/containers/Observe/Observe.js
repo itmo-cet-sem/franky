@@ -8,14 +8,14 @@ import './Observe.css';
 class Observe extends Component {
   render() {
     return (
-      <div>
+      <div className="observe-wrapper">
         <Grid container justify="center">
           <Grid
             item
             xs={12}
             md={10}
             lg={8}
-            className="observe-wrapper"
+            className="observe-grid-wrapper"
           >
             <Typography variant="h3" align="center">
               Try it now!
