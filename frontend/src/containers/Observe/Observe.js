@@ -8,6 +8,7 @@ import './Observe.css';
 class Observe extends Component {
   render() {
     let { calledSearchAny } = this.props.info;
+
     return (
       <div className="observe-wrapper">
         <Grid container justify="center">
