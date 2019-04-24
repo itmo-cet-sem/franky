@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardContent , CardMedia, Typography } from '@material-ui/core';
+import { Card, CardContent , CardMedia, Typography, CircularProgress } from '@material-ui/core';
 import './ActivityCard.css';
 
 class ActivityCard extends Component {
@@ -7,6 +7,9 @@ class ActivityCard extends Component {
     const { logo, title, tags, name, error, isLoading } = this.props;
     return (
       <Card className="activity-card">
+        {isLoading && <div className="activity-card__loader-wrapper">
+          <CircularProgress className="activity-card__progress" size={68} color="secondary" />
+        </div>}
         <CardMedia
           component="img"
           alt="Contemplative Reptile"

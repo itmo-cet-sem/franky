@@ -7,6 +7,7 @@ import './Observe.css';
 
 class Observe extends Component {
   render() {
+    let { calledSearchAny } = this.props.info;
     return (
       <div className="observe-wrapper">
         <Grid container justify="center">
@@ -23,7 +24,7 @@ class Observe extends Component {
             <Grid item xs={12} align="center">
               <SearchBlock />
             </Grid>
-            <ActivityInfo />
+            {calledSearchAny && <ActivityInfo />}
           </Grid>
         </Grid>
       </div>
