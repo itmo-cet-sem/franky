@@ -1,0 +1,20 @@
+.footer {
+	background: #282c34;
+	padding: 10px;
+}
+
+.footer p {
+	margin: 0;
+}
+
+.footer__content {
+	text-align: center;
+}
+
+.footer__app-name {
+	color: #fff;
+}
+
+.footer__app-description {
+	color: #ffffff4f;	
+}

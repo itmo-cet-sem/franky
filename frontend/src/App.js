@@ -1,23 +1,20 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import Test from './components/Test/Test';
+import Observe from './containers/Observe/Observe';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 import store from './store';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Welcome to Franky App.
-          </p>
-        </header>
+        <Header/> 
         <Provider store={store}>
-          <Test/>
+          <Observe/>
         </Provider>
+        <Footer/>
       </div>
     );
   }
