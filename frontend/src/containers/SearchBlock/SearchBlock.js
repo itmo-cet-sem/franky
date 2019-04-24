@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getFullData } from '../../actions/index';
 import SnackbarAlertContent from '../../components/SnackbarAlertContent/SnackbarAlertContent';
-import { Paper, InputBase, Button, Snackbar} from '@material-ui/core';
+import { Paper, InputBase, Button, Snackbar, CircularProgress } from '@material-ui/core';
 import { Search as SearchIcon } from '@material-ui/icons';
+import classNames from 'classnames';
 import './SearchBlock.css';
 
 class SearchBlock extends Component {
@@ -46,6 +47,8 @@ class SearchBlock extends Component {
   }
 
   render() {
+    let loading = this.props.info.github.isLoading || this.props.info.stackoverflow.isLoading || this.props.info.dockerhub.isLoading;
+
     return (
         <Paper className="b-search" elevation={1}>
           <InputBase
@@ -54,16 +57,19 @@ class SearchBlock extends Component {
             value={this.state.login}
             onChange={this._onLoginChange}
           />
-          <Button
-            className="b-search__icon-button"
-            size="medium"
-            color="primary"
-            onClick={this._onSearch}
-            disabled={this.props.info.github.isLoading || this.props.info.stackoverflow.isLoading || this.props.info.dockerhub.isLoading}
-          >
-            <SearchIcon />
-            Search
-          </Button>
+          <div className="b-search__btn-wrapper">
+            <Button
+              className={classNames('b-search__icon-button', loading ? 'b-search__icon-button_loading' : '')}
+              size="large"
+              color="primary"
+              onClick={this._onSearch}
+              disabled={loading}
+            >
+              <SearchIcon />
+              Search
+              {loading && <CircularProgress size={24} className="b-search__btn-loader" />}
+            </Button>
+          </div>
 
 
 

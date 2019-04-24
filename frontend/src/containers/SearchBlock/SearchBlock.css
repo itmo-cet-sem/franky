@@ -17,3 +17,21 @@
 .b-search__button: {
   padding: 10px;
 }
+
+.b-search__btn-wrapper {
+  position: relative;
+}
+
+.b-search__btn-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  margin-top: -12px;
+  margin-left: -12px;
+}
+
+.b-search  .b-search__icon-button.b-search__icon-button_loading {
+  color: #a8a8a8;
+  background: #e0e0e0;
+}
