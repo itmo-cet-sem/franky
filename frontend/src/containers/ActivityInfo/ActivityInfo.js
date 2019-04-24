@@ -15,7 +15,7 @@ class ActivityInfo extends Component {
       <div className="activity-info">
         <Paper className="activity-info__common" elevation={1}>
           <Typography variant="h5" component="h3">
-            Common info.
+            Common info
           </Typography>
           <Typography component="p">
             <b>Username:</b> @{ this.props.info.login }

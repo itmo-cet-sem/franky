@@ -5,6 +5,22 @@ import './ActivityCard.css';
 class ActivityCard extends Component {
   render() {
     const { logo, title, tags, name, error, isLoading } = this.props;
+    let contentInfo;
+
+    if (isLoading) {
+      contentInfo = 'Loading data';
+    } else if (!error) {
+      contentInfo = <ul>
+        <li>Name: { name || '(not set)'}</li>
+        <li>Languages: { tags && tags.length ?
+          tags.map((item, i) => <span key={i}>{item} </span>) :
+          'no languages'
+        }</li>
+      </ul>;
+    } else {
+      contentInfo = error;
+    }
+
     return (
       <Card className="activity-card">
         {isLoading && <div className="activity-card__loader-wrapper">
@@ -23,18 +39,7 @@ class ActivityCard extends Component {
             {title}
           </Typography>
           <Typography component="div">
-            { !error ? (
-              <ul>
-                <li>Loading: { isLoading ? '+' : '-'}</li>
-                <li>Name: { name || '(not set)'}</li>
-                <li>Languages: { tags && tags.length ?
-                  tags.map((item, i) => <span key={i}>{item} </span>) :
-                  'no languages'
-                }</li>
-              </ul>) : (
-              <p>{ error }</p>
-              )
-            }
+            { contentInfo }
           </Typography>
         </CardContent>
       </Card>
