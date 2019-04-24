@@ -1,31 +1,19 @@
-version: '3'
+version: '3.3'
  
 services:
   frankyapp:
-    image: franky_frankyapp:latest
+    image: franky_frankyapp
     build:
       context:  ./
       dockerfile: Dockerfile-frankyapp
-    networks:
-      main:
-    env_file:
-      - .env
     expose:
       - "5000"
-    deploy:
-      mode: replicated
-      replicas: 2
   nginx:
-    image: franky_nginx:latest
+    image: franky_nginx
     build:
       context:  ./
       dockerfile: Dockerfile-nginx
-    networks:
-      main:
     ports:
       - "80:80"
-    depends_on:
+    links:
       - frankyapp
-
-networks:
-  main:

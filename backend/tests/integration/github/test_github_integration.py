@@ -8,7 +8,7 @@ def github():
 
 
 def test_github_returns_user_metadata(github):
-    user = github.user('octocat')
+    user = github.user('tcibinan')
     assert user.name
     assert user.login
     assert user.languages
@@ -17,11 +17,3 @@ def test_github_returns_user_metadata(github):
 def test_github_fails_if_user_does_not_exists(github):
     with pytest.raises(GitHubException):
         github.user('')
-
-
-def test_github_returns_user_projects(github):
-    projects = github.projects('octocat')
-    assert projects
-    for project in projects:
-        assert project.name
-        assert project.start

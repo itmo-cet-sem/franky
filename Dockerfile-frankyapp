@@ -21,7 +21,6 @@ ENV DOCKER_NETWORK_HOST=0.0.0.0
 
 COPY --from=builder /install /usr/local
 COPY ./backend /home/runner/franky/backend
-
 WORKDIR /home/runner/franky/backend
 EXPOSE 5000
 CMD ["python", "franky/server.py"]

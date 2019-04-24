@@ -1,5 +1,1 @@
 config/nginx/nginx.conf
-
-.env
-
-backend/private-key.pem

@@ -98,12 +98,6 @@ Several environment variables are required for running the application and integ
 
 ### Run with Docker
 
-Before all:
-* Specify configs
-  * Copy to worker folder necessary keys
-  * Create `.env` file from sample `cp .env.sample .env`
-  * Fill `.env` file with your credentials
-
 As nginx proxy in development. Open `127.0.0.1`
 
     # Copy development config
