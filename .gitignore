@@ -1,5 +1,4 @@
 config/nginx/nginx.conf
-
 .env
-
+.idea/
 backend/private-key.pem
