@@ -4,9 +4,9 @@ from typing import List
 from flask import Flask
 
 from model import UserData
+from utils import convert_to_json
 from model.project import ProjectData
 from service import GitHub, StackOverflow
-from utils import convert_to_json
 
 app = Flask(__name__)
 
@@ -18,18 +18,17 @@ def ping() -> str:
 
 @app.route('/api/github/<username>', methods=['GET'])
 def github_user(username) -> UserData:
-    return GitHub().user(username).to_json()
+    return convert_to_json(GitHub().user(username))
 
 
 @app.route('/api/github/<username>/projects', methods=['GET'])
 def github_projects(username) -> List[ProjectData]:
-    return GitHub().projects(username).to_json()
+    return convert_to_json(GitHub().projects(username))
 
 
 @app.route('/api/stackoverflow/<username>', methods=['GET'])
 def stackoverflow(username):
-    user = StackOverflow().user(username)
-    return user.to_json()
+    return convert_to_json(StackOverflow().user(username))
 
 
 if __name__ == '__main__':

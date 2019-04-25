@@ -25,10 +25,16 @@ class StackOverflow(Service):
         user = UserData(login=user_id, name=user_name, tags=user_tags)
         return user
 
+    def projects(self, user_name: str):
+        pass
+
     def _get_user_id(self, user_name: str) -> str:
         payload = {'inname': user_name}
         response_data = self._call(self._user_url, payload)
-        data = response_data['items']
+        try:
+            data = response_data['items']
+        except KeyError:
+            raise StackoverflowServiceException('User not found')
 
         if len(data) >= 1:
             user_id = self._get_unique_user(data, user_name)
