@@ -19,7 +19,7 @@ const variantIcon = {
   info: InfoIcon,
 };
 
-const styles = theme => ({
+const styles = (theme) => ({
   success: {
     backgroundColor: green[600],
   },
