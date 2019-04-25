@@ -28,10 +28,8 @@ class ActivityCard extends Component {
         </div>}
         <CardMedia
           component="img"
-          alt="Contemplative Reptile"
           height="140"
           image={logo}
-          title="Contemplative Reptile"
           className="activity-card__logo"
         />
         <CardContent>
