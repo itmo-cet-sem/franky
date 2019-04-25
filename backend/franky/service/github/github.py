@@ -73,7 +73,7 @@ class GitHub(Service):
             response_data = self._call(request_payload)
             response_user = response_data['user']
             login = response_user['login']
-            name = response_user['name']
+            name = response_user['name'] if response_user['name'] else None
             languages = list(set(language['name']
                                  for repository in response_user['repositories']['nodes']
                                  for language in repository['languages']['nodes']))
