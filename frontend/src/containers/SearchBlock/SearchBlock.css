@@ -14,10 +14,6 @@
   flex: 1;
 }
 
-.b-search__button: {
-  padding: 10px;
-}
-
 .b-search__btn-wrapper {
   position: relative;
 }

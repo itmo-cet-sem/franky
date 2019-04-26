@@ -1,22 +1,27 @@
 import React, { Component } from 'react';
 import { Card, CardContent , CardMedia, Typography, CircularProgress } from '@material-ui/core';
+import TagChip from '../TagChip/TagChip';
 import './ActivityCard.css';
 
 class ActivityCard extends Component {
   render() {
-    const { logo, title, tags, name, error, isLoading } = this.props;
+    let { logo, title, tags, name, error, isLoading } = this.props;
     let contentInfo;
-
+    tags={"Js": 0.6, "python": 0.4}; error=false;
     if (isLoading) {
       contentInfo = 'Loading data';
     } else if (!error) {
-      contentInfo = <ul>
-        <li>Name: { name || '(not set)'}</li>
-        <li>Languages: { tags && tags.length ?
-          tags.map((item, i) => <span key={i}>{item} </span>) :
-          'no languages'
-        }</li>
-      </ul>;
+      contentInfo = (<div>
+        <p>Name: { name || '(not set)'}</p>
+        <div>
+          { tags && Object.keys(tags).length ?
+              Object.keys(tags).map((key, i) => <TagChip key={i} tag={key} value={tags[key]*100} />) :
+              'no languages'
+            }
+        </div>
+      </div>
+      );
+      
     } else {
       contentInfo = error;
     }
@@ -28,10 +33,8 @@ class ActivityCard extends Component {
         </div>}
         <CardMedia
           component="img"
-          alt="Contemplative Reptile"
           height="140"
           image={logo}
-          title="Contemplative Reptile"
           className="activity-card__logo"
         />
         <CardContent>
