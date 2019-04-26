@@ -14,10 +14,12 @@ class ActivityCard extends Component {
       if (tags  && Object.keys(tags).length) {
         sortedTags = Object.keys(tags);
         sortedTags.sort((a, b) => {
-          if (tags[a] < tags[b])
+          if (tags[a] < tags[b]) {
             return 1;
-          else
+          }
+          else {
             return -1;
+          }
         });
       }
 
@@ -30,7 +32,7 @@ class ActivityCard extends Component {
                   key={i}
                   tag={key}
                   real={Math.floor(tags[key]*100)}
-                  value={Math.floor(tags[key]*100) ? Math.floor(tags[key]*100) : ">1"}
+                  value={Math.floor(tags[key]*100) ? Math.floor(tags[key]*100) : '>1'}
                 />) :
               'no languages'
             }
