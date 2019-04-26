@@ -6,16 +6,32 @@ import './ActivityCard.css';
 class ActivityCard extends Component {
   render() {
     let { logo, title, tags, name, error, isLoading } = this.props;
-    let contentInfo;
-    tags={"Js": 0.6, "python": 0.4}; error=false;
+    let contentInfo, sortedTags = [];
+
     if (isLoading) {
       contentInfo = 'Loading data';
     } else if (!error) {
+      if (tags  && Object.keys(tags).length) {
+        sortedTags = Object.keys(tags);
+        sortedTags.sort((a, b) => {
+          if (tags[a] < tags[b])
+            return 1;
+          else
+            return -1;
+        });
+      }
+
       contentInfo = (<div>
-        <p>Name: { name || '(not set)'}</p>
+        <p>Name: { name || '(not set)'}</p> 
         <div>
           { tags && Object.keys(tags).length ?
-              Object.keys(tags).map((key, i) => <TagChip key={i} tag={key} value={tags[key]*100} />) :
+              sortedTags.map((key, i) => 
+                <TagChip
+                  key={i}
+                  tag={key}
+                  real={Math.floor(tags[key]*100)}
+                  value={Math.floor(tags[key]*100) ? Math.floor(tags[key]*100) : ">1"}
+                />) :
               'no languages'
             }
         </div>

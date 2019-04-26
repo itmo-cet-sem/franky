@@ -36,7 +36,7 @@ export default (state = initObservableInfo, action) => {
           ...state.github,
           login: action.data.login,
           name: action.data.name,
-          languages: action.data.languages,
+          tags: action.data.tags,
           isLoading: false
         }
       };
