@@ -82,6 +82,7 @@ class GitHub(Service):
                     language_name = language_node['name']
                     bytes_of_code = int(languages_node['edges'][index]['size'])
                     languages[language_name] = languages.get(language_name, 0) + bytes_of_code
+
             datas.append(UserData(login=login, name=name, tags=languages))
             cursor = response_user['repositories']['pageInfo']['endCursor']
             if not cursor:

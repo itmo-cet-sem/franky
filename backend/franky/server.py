@@ -4,9 +4,9 @@ from typing import List
 from flask import Flask
 
 from model import UserData
-from model.project import ProjectData
-from service import GitHub
 from utils import convert_to_json
+from model.project import ProjectData
+from service import GitHub, StackOverflow
 
 app = Flask(__name__)
 
@@ -24,6 +24,11 @@ def github_user(username) -> UserData:
 @app.route('/api/github/<username>/projects', methods=['GET'])
 def github_projects(username) -> List[ProjectData]:
     return convert_to_json(GitHub().projects(username))
+
+
+@app.route('/api/stackoverflow/<username>', methods=['GET'])
+def stackoverflow(username):
+    return convert_to_json(StackOverflow().user(username))
 
 
 if __name__ == '__main__':
