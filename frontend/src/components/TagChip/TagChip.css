@@ -1,0 +1,18 @@
+.activity-card .tag-chip {
+    border-width: 3px;
+
+    max-width: 100%;
+    justify-content: left;
+
+    margin-right: 4px;
+    margin-bottom: 4px; 
+}
+
+.activity-card .tag-chip span{
+    overflow: hidden;
+}
+
+.activity-card .tag-chip .tag-chip__value {
+    font-size: 0.9em;
+    font-weight: 500;
+}

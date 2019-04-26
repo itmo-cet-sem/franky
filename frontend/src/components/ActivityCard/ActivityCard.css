@@ -1,10 +1,10 @@
 .activity-card {
-	height: 100%;
-	position: relative;
+    height: 100%;
+    position: relative;
 }
 
 .activity-card .activity-card__loader-wrapper {
-	position: absolute;
+    position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
@@ -13,17 +13,17 @@
 }
 
 .activity-card .activity-card__logo {
-	width: auto;
-	margin: auto;
+    width: auto;
+    margin: auto;
 
-	padding: 16px;
+    padding: 16px;
 }
 
 .activity-card .activity-card__progress {
-	position: absolute;
-	top: 50%;
-	left: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
 
-	margin-top: -34px;
-	margin-left: -34px;
+    margin-top: -34px;
+    margin-left: -34px;
 }
