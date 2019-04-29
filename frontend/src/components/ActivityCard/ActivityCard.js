@@ -27,12 +27,11 @@ class ActivityCard extends Component {
         <p>Name: { name || '(not set)'}</p> 
         <div>
           { tags && Object.keys(tags).length ?
-              sortedTags.map((key, i) => 
+              sortedTags.filter((key) => key > 0.01).map((key, i) => 
                 <TagChip
                   key={i}
                   tag={key}
-                  real={Math.floor(tags[key]*100)}
-                  value={Math.floor(tags[key]*100) ? Math.floor(tags[key]*100) : '>1'}
+                  value={Math.floor(tags[key]*100)}
                 />) :
               'no languages'
             }
