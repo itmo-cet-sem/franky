@@ -6,7 +6,7 @@ import './ActivityCard.css';
 class ActivityCard extends Component {
   render() {
     let { logo, title, tags, name, error, isLoading } = this.props;
-    let contentInfo, sortedTags = [];
+    let contentInfo, sortedTags = [], tagsChips, othersChip;
 
     if (isLoading) {
       contentInfo = 'Loading data';
@@ -21,19 +21,33 @@ class ActivityCard extends Component {
             return -1;
           }
         });
+
+        tagsChips = sortedTags
+          .filter((key) => tags[key] >= 0.01)
+          .map((key, i) => 
+            <TagChip
+              key={i}
+              tag={key}
+              value={Math.floor(tags[key]*100)}
+            />
+          );
+
+        othersChip = (tags[sortedTags[sortedTags.length - 1]] < 0.01) ? (
+          <TagChip
+              key={'Others'}
+              tag={'Others'}
+              value={'<1'}
+            />
+        ) : '';
+
       }
 
       contentInfo = (<div>
         <p>Name: { name || '(not set)'}</p> 
         <div>
           { tags && Object.keys(tags).length ?
-              sortedTags.filter((key) => key > 0.01).map((key, i) => 
-                <TagChip
-                  key={i}
-                  tag={key}
-                  value={Math.floor(tags[key]*100)}
-                />) :
-              'no languages'
+              [tagsChips, othersChip] :
+              'no languages' 
             }
         </div>
       </div>
