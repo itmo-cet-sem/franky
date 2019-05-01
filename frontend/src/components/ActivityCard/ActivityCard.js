@@ -1,22 +1,58 @@
 import React, { Component } from 'react';
 import { Card, CardContent , CardMedia, Typography, CircularProgress } from '@material-ui/core';
+import TagChip from '../TagChip/TagChip';
 import './ActivityCard.css';
 
 class ActivityCard extends Component {
   render() {
-    const { logo, title, tags, name, error, isLoading } = this.props;
-    let contentInfo;
+    let { logo, title, tags, name, error, isLoading } = this.props;
+    let contentInfo, sortedTags = [], tagsChips, othersChip;
 
     if (isLoading) {
       contentInfo = 'Loading data';
     } else if (!error) {
-      contentInfo = <ul>
-        <li>Name: { name || '(not set)'}</li>
-        <li>Languages: { tags && tags.length ?
-          tags.map((item, i) => <span key={i}>{item} </span>) :
-          'no languages'
-        }</li>
-      </ul>;
+      if (tags  && Object.keys(tags).length) {
+        sortedTags = Object.keys(tags);
+        sortedTags.sort((a, b) => {
+          if (tags[a] < tags[b]) {
+            return 1;
+          }
+          else {
+            return -1;
+          }
+        });
+
+        tagsChips = sortedTags
+          .filter((key) => tags[key] >= 0.01)
+          .map((key, i) => 
+            <TagChip
+              key={i}
+              tag={key}
+              value={Math.floor(tags[key]*100)}
+            />
+          );
+
+        othersChip = (tags[sortedTags[sortedTags.length - 1]] < 0.01) ? (
+          <TagChip
+              key={'Others'}
+              tag={'Others'}
+              value={'<1'}
+            />
+        ) : '';
+
+      }
+
+      contentInfo = (<div>
+        <p>Name: { name || '(not set)'}</p> 
+        <div>
+          { tags && Object.keys(tags).length ?
+              [tagsChips, othersChip] :
+              'no languages' 
+            }
+        </div>
+      </div>
+      );
+      
     } else {
       contentInfo = error;
     }
