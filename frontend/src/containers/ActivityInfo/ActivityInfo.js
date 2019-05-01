@@ -9,6 +9,7 @@ import dockerLogo from './docker-logo.png';
 
 class ActivityInfo extends Component {
   render() {
+    const FEATURE_IMPLEMENTED = false;
     let { info } = this.props;
 
     return (
@@ -33,20 +34,22 @@ class ActivityInfo extends Component {
               error={info.github.error}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          { FEATURE_IMPLEMENTED && <Grid item xs={12} sm={4}>
             <ActivityCard
               title="Stackoverflow Profile"
               logo={stackLogo}
               error="@TODO"
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          }
+          { FEATURE_IMPLEMENTED && <Grid item xs={12} sm={4}>
             <ActivityCard
               title="DockerHub Profile"
               logo={dockerLogo}
               error="@TODO"
             />
           </Grid>
+          }
         </Grid>
       </div>
     );
