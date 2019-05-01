@@ -30,7 +30,7 @@ class ActivityInfo extends Component {
               logo={githubLogo}
               isLoading={info.github.isLoading}
               name={info.github.name}
-              tags={info.github.languages}
+              tags={info.github.tags}
               error={info.github.error}
             />
           </Grid>
