@@ -40,7 +40,7 @@ class Timeline extends Component {
         ...item,
         startTime: new Date(item['start']),
         endTime: item['end'] ? new Date(item['end']) : new Date(),
-      }
+      };
     }).sort((a, b) => {
       if (a.endTime.getTime() < b.endTime.getTime()) {
         return 1;
