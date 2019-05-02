@@ -3,7 +3,8 @@ from typing import List, Optional
 
 class ProjectData:
 
-    def __init__(self, name: str, start: str, end: Optional[str], tags: List[str], url: str):
+    def __init__(self, name: str, start: Optional[str], end: Optional[str], tags: List[str],
+                 url: str, size: float, pull_count: int, star_count: int):
         """
         User project data.
 
@@ -18,3 +19,6 @@ class ProjectData:
         self.end = end
         self.url = url
         self.tags = tags or []
+        self.size = size or None
+        self.pull_count = pull_count or None
+        self.star_count = star_count or None

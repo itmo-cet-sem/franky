@@ -114,6 +114,7 @@ class GitHub(Service):
                             name
                             createdAt
                             pushedAt
+                            homepageUrl
                             languages(first: %(page_size)s) {
                               nodes {
                                 name
@@ -140,7 +141,7 @@ class GitHub(Service):
                     raw_latest_push_date = None
                 tags = list(set(language['name'] for language in repository['languages']['nodes']))
                 datas.append(ProjectData(name=repository['name'], start=raw_creation_date, end=raw_latest_push_date,
-                                         tags=tags))
+                                         tags=tags, url=repository['homepageUrl']))
             cursor = response_user['repositories']['pageInfo']['endCursor']
             if not cursor:
                 break
