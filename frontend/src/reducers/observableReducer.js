@@ -2,11 +2,14 @@ import {
   SET_OBSERVABLE_LOGIN,
   RECEIVE_GITHUB_DATA,
   REQUEST_GITHUB_DATA,
-  ERROR_GITHUB_DATA
+  ERROR_GITHUB_DATA,
+  SEARCH_ANY
 } from '../actions/index';
 
 let initObservableInfo = {
   login: null,
+  isLoading: false,
+  calledSearchAny: false,
   github: {},
   stackoverflow: {},
   dockerhub: {}
@@ -33,7 +36,7 @@ export default (state = initObservableInfo, action) => {
           ...state.github,
           login: action.data.login,
           name: action.data.name,
-          languages: action.data.languages,
+          tags: action.data.tags,
           isLoading: false
         }
       };
@@ -43,6 +46,11 @@ export default (state = initObservableInfo, action) => {
         github: {
           error: 'No data'
         }
+      };
+    case SEARCH_ANY: 
+      return {
+        ...state,
+        calledSearchAny: true
       };
     default: 
       return state;

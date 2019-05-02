@@ -1,4 +1,5 @@
 export const GET_FULL_DATA = 'GET_FULL_DATA';
+export const GET_FULL_DATA_FINISH = 'GET_FULL_DATA_FINISH';
 
 export const REQUEST_GITHUB_DATA = 'REQUEST_GITHUB_DATA';
 export const REQUEST_STACK_DATA = 'REQUEST_STACK_DATA';
@@ -13,6 +14,7 @@ export const ERROR_STACK_DATA = 'ERROR_STACK_DATA';
 export const ERROR_DOCKER_DATA = 'ERROR_DOCKER_DATA';
 
 export const SET_OBSERVABLE_LOGIN = 'SET_OBSERVABLE_LOGIN';
+export const SEARCH_ANY = 'SEARCH_ANY';
 
 const _makeRequest = (apiUrl, login, requestType, receiveType, errorType) => (dispatch) => {
   dispatch({ type: requestType });
@@ -67,7 +69,13 @@ export const getFullData = (login) => (dispatch) => {
     //     ERROR_DOCKER_DATA
     //   )
     // )
-  ]);
+  ]).then((resArr) => {
+    dispatch({ type: GET_FULL_DATA_FINISH });
+  });
 
   return res;
+};
+
+export const searchAny = () => {
+  return { type: SEARCH_ANY };
 };
