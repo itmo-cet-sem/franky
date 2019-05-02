@@ -1,7 +1,8 @@
-import { createStore } from 'redux';
-import testReducer from '../reducers/testReducer';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import reducers from '../reducers/';
 
-const store = createStore(testReducer);
+const store = createStore(reducers, applyMiddleware(thunk));
 
 store.subscribe(() => {
 	console.log('subscribe: something happened - ', store.getState());
