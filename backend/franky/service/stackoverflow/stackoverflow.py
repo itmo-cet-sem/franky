@@ -1,3 +1,4 @@
+import operator
 from typing import Dict, List
 from urllib.parse import urljoin
 from functools import reduce
@@ -47,15 +48,15 @@ class StackOverflow(Service):
         payload = {'order': 'desc', 'sort': 'popular'}
         request_url = f'{self._user_url}/{user_id}/{self._tags_url}'
         response_data = self._call(request_url, payload)
-        tags = self._calculate_tags_weight(response_data['items'])
+        if len(response_data['items']) == 0:
+            tags = {}
+        else:
+            tags = self._calculate_tags_weight(response_data['items'])
         return tags
 
     def _calculate_tags_weight(self, response_data: List) -> Dict:
-        try:
-            sum_tags = reduce(lambda a, b: a + b, [tag['count'] for tag in response_data])
-            tags = {tag['name']: tag['count'] / sum_tags for tag in response_data}
-        except TypeError:
-            tags = {}
+        sum_tags = reduce(operator.add, [tag['count'] for tag in response_data])
+        tags = {tag['name']: tag['count'] / sum_tags for tag in response_data}
         return tags
 
     def _call(self, request_url: str, payload: Dict) -> Dict:
