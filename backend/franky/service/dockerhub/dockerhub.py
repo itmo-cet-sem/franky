@@ -46,14 +46,13 @@ class DockerHub(Service):
     def _get_user_full_name(self, username) -> str:
         username = user_cleaner(username)
         request_url = self._api_url('%s/%s' % (self._user_url, username))
-        payload = dict()
-        response_data = self._call(request_url, payload)
+        response_data = self._call(request_url)
         return response_data['full_name']
 
     def _get_user_tags(self, username: str) -> Dict:
         username = user_cleaner(username)
         request_url = self._api_url('%s/%s' % (self._repository_url, username))
-        payload = {'page_size': self._page_size, 'page': 1, 'ordering': 'last_updated'}
+        payload = {'page': 1}
         all_tags = {}
         while True:
             response_data = self._call(request_url, payload)
@@ -73,7 +72,7 @@ class DockerHub(Service):
 
     def _get_tags(self, username, image_name: str) -> Optional[Dict]:
         request_url = self._api_url('%s/%s/%s/%s' % (self._repository_url, username, image_name, self._tag_url))
-        payload = {'page_size': self._page_size, 'page': 1, 'ordering': 'last_updated'}
+        payload = {'page': 1}
         tags = {}
         while True:
             response_data = self._call(request_url, payload)
@@ -94,7 +93,7 @@ class DockerHub(Service):
     def projects(self, username: str) -> List[ProjectData]:
         username = user_cleaner(username)
         request_url = self._api_url('%s/%s' % (self._repository_url, username))
-        payload = {'page_size': self._page_size, 'page': 1, 'ordering': 'last_updated'}
+        payload = {'page': 1}
         datas = []
         while True:
             response_data = self._call(request_url, payload)
@@ -122,9 +121,9 @@ class DockerHub(Service):
                 payload['page'] += 1
         return datas
 
-    def _get_image(self, username, image_name: str) -> Optional[Dict]:
+    def _get_image(self, username, image_name: str) -> Dict:
         request_url = self._api_url('%s/%s/%s/%s' % (self._repository_url, username, image_name, self._tag_url))
-        payload = {'page_size': self._page_size, 'page': 1, 'ordering': 'last_updated'}
+        payload = {'page': 1}
         datas = []
         tags_list = set()
         while True:
@@ -141,14 +140,16 @@ class DockerHub(Service):
                 break
             else:
                 payload['page'] += 1
-        if datas:
-            return {'creation_date': datas[-1]['last_updated'], 'size': datas[0]['size'], 'tags': tags_list}
-        else:
-            return None
+        return {'creation_date': datas[-1]['last_updated'], 'size': datas[0]['size'], 'tags': tags_list}
 
-    def _call(self, request_url: str, payload: dict) -> dict:
+    def _call(self, request_url: str, payload=None) -> dict:
         try:
             url = urljoin(self._url, request_url)
+            if payload is None:
+                payload = dict()
+            else:
+                payload['page_size'] = self._page_size
+                payload['ordering'] = 'last_updated'
             response = requests.get(url, payload)
         except requests.exceptions.Timeout as e:
             raise DockerHubException('Connection Timeout. Download failed: %s' % e)

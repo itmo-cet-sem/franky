@@ -4,7 +4,7 @@ from typing import List, Optional
 class ProjectData:
 
     def __init__(self, name: str, start: Optional[str], end: Optional[str], tags: List[str],
-                 url: str, size: float, pull_count: int, star_count: int):
+                 url: str, size: Optional[int], pull_count: Optional[int], star_count: Optional[int]):
         """
         User project data.
 
