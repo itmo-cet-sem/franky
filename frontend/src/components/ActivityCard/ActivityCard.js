@@ -47,7 +47,7 @@ class ActivityCard extends Component {
         <div>
           { tags && Object.keys(tags).length ?
               [tagsChips, othersChip] :
-              'no languages' 
+              'no languages'
             }
         </div>
       </div>

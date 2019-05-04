@@ -3,7 +3,10 @@ import {
   RECEIVE_GITHUB_DATA,
   REQUEST_GITHUB_DATA,
   ERROR_GITHUB_DATA,
-  SEARCH_ANY
+  SEARCH_ANY,
+  REQUEST_PROJECTS,
+  RECEIVE_PROJECTS,
+  ERROR_PROJECTS
 } from '../actions/index';
 
 let initObservableInfo = {
@@ -12,7 +15,9 @@ let initObservableInfo = {
   calledSearchAny: false,
   github: {},
   stackoverflow: {},
-  dockerhub: {}
+  dockerhub: {},
+  projects: [],
+  isProjectsLoading: false
 };
 
 export default (state = initObservableInfo, action) => {
@@ -51,6 +56,24 @@ export default (state = initObservableInfo, action) => {
       return {
         ...state,
         calledSearchAny: true
+      };
+    case REQUEST_PROJECTS:
+      return {
+        ...state,
+        projects: [],
+        isProjectsLoading: true
+      };
+    case RECEIVE_PROJECTS: 
+      return {
+        ...state,
+        projects: action.data,
+        isProjectsLoading: false
+      };
+    case ERROR_PROJECTS: 
+      return {
+        ...state,
+        projects: [],
+        isProjectsLoading: false
       };
     default: 
       return state;

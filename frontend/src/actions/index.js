@@ -4,21 +4,24 @@ export const GET_FULL_DATA_FINISH = 'GET_FULL_DATA_FINISH';
 export const REQUEST_GITHUB_DATA = 'REQUEST_GITHUB_DATA';
 export const REQUEST_STACK_DATA = 'REQUEST_STACK_DATA';
 export const REQUEST_DOCKER_DATA = 'REQUEST_DOCKER_DATA';
+export const REQUEST_PROJECTS = 'REQUEST_PROJECTS';
 
 export const RECEIVE_GITHUB_DATA = 'RECEIVE_GITHUB_DATA';
 export const RECEIVE_STACK_DATA = 'RECEIVE_STACK_DATA';
 export const RECEIVE_DOCKER_DATA = 'RECEIVE_DOCKER_DATA';
+export const RECEIVE_PROJECTS = 'RECEIVE_PROJECTS';
 
 export const ERROR_GITHUB_DATA = 'ERROR_GITHUB_DATA';
 export const ERROR_STACK_DATA = 'ERROR_STACK_DATA';
 export const ERROR_DOCKER_DATA = 'ERROR_DOCKER_DATA';
+export const ERROR_PROJECTS = 'ERROR_PROJECTS';
 
 export const SET_OBSERVABLE_LOGIN = 'SET_OBSERVABLE_LOGIN';
 export const SEARCH_ANY = 'SEARCH_ANY';
 
-const _makeRequest = (apiUrl, login, requestType, receiveType, errorType) => (dispatch) => {
+const _makeRequest = (apiUrl, requestType, receiveType, errorType) => (dispatch) => {
   dispatch({ type: requestType });
-  return fetch(apiUrl + login)
+  return fetch(apiUrl)
     .then((res) => res.json())
     .then((json) => dispatch({
       type: receiveType,
@@ -43,11 +46,18 @@ export const getFullData = (login) => (dispatch) => {
   let res = Promise.all([
     dispatch(
       _makeRequest(
-        '/api/github/',
-        login,
+        '/api/github/' + login,
         REQUEST_GITHUB_DATA,
         RECEIVE_GITHUB_DATA,
         ERROR_GITHUB_DATA
+      )
+    ),
+    dispatch(
+      _makeRequest(
+        '/api/github/' + login + '/projects',
+        REQUEST_PROJECTS,
+        RECEIVE_PROJECTS,
+        ERROR_PROJECTS
       )
     ),
     // @TODO on ready

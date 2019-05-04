@@ -5,3 +5,19 @@
 .activity-info .activity-cards-wrapper {
     margin-top: 16px;
 }
+
+.vertical-timeline::before {
+    margin-top: 2em;
+}
+
+.timeline-wrapper {
+    margin-top: 10px;
+}
+
+.timeline-wrapper .vertical-timeline::before {
+    height: calc(100% - 5em);
+}
+
+.timeline-wrapper .vertical-timeline {
+    margin: 0px;
+}
