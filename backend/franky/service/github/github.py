@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from datetime import datetime, timedelta
 from typing import Optional, List
@@ -135,6 +136,9 @@ class GitHub(Service):
             for repository in repositories:
                 raw_creation_date = repository['createdAt']
                 raw_latest_push_date = repository['pushedAt']
+                if not raw_latest_push_date:
+                    logging.warn('Empty repository "%s" is skipped for "%s" user.' % (repository['name'], username))
+                    continue
                 latest_push_date = self._parse_datetime(raw_latest_push_date)
                 if latest_push_date + self._active_projects_period > datetime.utcnow():
                     raw_latest_push_date = None
