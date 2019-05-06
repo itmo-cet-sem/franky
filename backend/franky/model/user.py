@@ -3,7 +3,6 @@ from typing import Optional, Dict
 
 class UserData:
 
-
     def __init__(self, login: str, name: Optional[str], tags: Dict[str, str]):
         """
         User metadata.
