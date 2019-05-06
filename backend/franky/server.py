@@ -1,3 +1,4 @@
+import logging
 import os
 from typing import List
 
@@ -7,6 +8,8 @@ from model import UserData
 from utils import convert_to_json
 from model.project import ProjectData
 from service import GitHub, StackOverflow, DockerHub
+
+logging.basicConfig(format='[%(asctime)s] %(levelname)s in %(module)s: %(message)s', level=logging.WARN)
 
 app = Flask(__name__)
 

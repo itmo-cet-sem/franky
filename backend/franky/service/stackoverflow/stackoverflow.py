@@ -1,5 +1,7 @@
+import operator
 from typing import Dict, List
 from urllib.parse import urljoin
+from functools import reduce
 
 import requests
 
@@ -42,12 +44,20 @@ class StackOverflow(Service):
             raise StackoverflowServiceException('User not found')
         return str(user_id)
 
-    def _get_user_tags(self, user_id: str) -> List:
+    def _get_user_tags(self, user_id: str) -> Dict:
         payload = {'order': 'desc', 'sort': 'popular'}
         request_url = f'{self._user_url}/{user_id}/{self._tags_url}'
         response_data = self._call(request_url, payload)
-        tags_name = [tag['name'] for tag in response_data['items']]
-        return tags_name
+        if len(response_data['items']) == 0:
+            tags = {}
+        else:
+            tags = self._calculate_tags_weight(response_data['items'])
+        return tags
+
+    def _calculate_tags_weight(self, response_data: List) -> Dict:
+        sum_tags = reduce(operator.add, [tag['count'] for tag in response_data])
+        tags = {tag['name']: tag['count'] / sum_tags for tag in response_data}
+        return tags
 
     def _call(self, request_url: str, payload: Dict) -> Dict:
         url = urljoin(self._rest_endpoint, request_url)

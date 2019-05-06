@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from datetime import datetime, timedelta
 from typing import Optional, List
@@ -41,6 +42,7 @@ class GitHub(Service):
     def user(self, username) -> Optional[UserData]:
         cursor = None
         datas = []
+        repository_names = []
         while True:
             request_payload = {
                 'query': '''
@@ -53,6 +55,10 @@ class GitHub(Service):
                             endCursor
                           }
                           nodes {
+                            nameWithOwner
+                            parent {
+                              nameWithOwner
+                            }
                             languages(first: %(page_size)s) {
                               edges {
                                 size
@@ -77,6 +83,12 @@ class GitHub(Service):
             name = response_user['name']
             languages = {}
             for repository_node in response_user['repositories']['nodes']:
+                repository_name = repository_node['nameWithOwner']
+                if repository_node['parent']:
+                    repository_name = repository_node['parent']['nameWithOwner']
+                if repository_name in repository_names:
+                    continue
+                repository_names.append(repository_name)
                 languages_node = repository_node['languages']
                 for index, language_node in enumerate(languages_node['nodes']):
                     language_name = language_node['name']
@@ -111,7 +123,10 @@ class GitHub(Service):
                             endCursor
                           }
                           nodes {
-                            name
+                            parent {
+                              nameWithOwner
+                            }
+                            nameWithOwner
                             createdAt
                             pushedAt
                             homepageUrl
@@ -136,12 +151,19 @@ class GitHub(Service):
             for repository in repositories:
                 raw_creation_date = repository['createdAt']
                 raw_latest_push_date = repository['pushedAt']
+                repository_name = repository['nameWithOwner']
+                if repository['parent']:
+                    repository_name = repository['parent']['nameWithOwner']
+                if not raw_latest_push_date:
+                    logging.warn('Empty repository "%s" is skipped for "%s" user.' % (repository_name, username))
+                    continue
                 latest_push_date = self._parse_datetime(raw_latest_push_date)
                 if latest_push_date + self._active_projects_period > datetime.utcnow():
                     raw_latest_push_date = None
                 tags = list(set(language['name'] for language in repository['languages']['nodes']))
-                datas.append(ProjectData(name=repository['name'], start=raw_creation_date, end=raw_latest_push_date,
-                                         tags=tags, url=repository['homepageUrl'], size=0, pull_count=0, star_count=0))
+                if not any(data for data in datas if data.name == repository_name):
+                    datas.append(ProjectData(name=repository_name, start=raw_creation_date, end=raw_latest_push_date,
+                                             tags=tags, url=repository['homepageUrl'], size=0, pull_count=0, star_count=0))
             cursor = response_user['repositories']['pageInfo']['endCursor']
             if not cursor:
                 break

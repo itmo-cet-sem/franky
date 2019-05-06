@@ -1,0 +1,18 @@
+.timeline-loader-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.timeline-loader-wrapper .timeline__loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -20px;
+    margin-left: -20px;
+}
+
+.timeline__chip {
+    margin-right: 4px;
+    margin-bottom: 4px;
+}

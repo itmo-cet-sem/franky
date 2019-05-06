@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Typography, Paper, Grid } from '@material-ui/core';
 import ActivityCard from '../../components/ActivityCard/ActivityCard';
+import Timeline from '../../components/Timeline/Timeline';
 import './ActivityInfo.css';
 import githubLogo from './github-logo.png';
 import stackLogo from './stack-logo.png';
@@ -50,6 +51,15 @@ class ActivityInfo extends Component {
             />
           </Grid>
           }
+        </Grid>
+
+        <Grid container className="timeline-wrapper">
+          <Grid item xs={12}>
+            <Timeline 
+              projects={info.projects}
+              loading={info.isProjectsLoading}
+            />
+          </Grid>
         </Grid>
       </div>
     );
