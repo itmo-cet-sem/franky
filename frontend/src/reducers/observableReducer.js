@@ -25,7 +25,7 @@ let initObservableInfo = {
 
 export default (state = initObservableInfo, action) => {
   switch (action.type) {
-    case SET_OBSERVABLE_LOGIN: 
+    case SET_OBSERVABLE_LOGIN:
       return {
         ...state,
         login: action.login
@@ -37,7 +37,7 @@ export default (state = initObservableInfo, action) => {
           isLoading: true
         }
       };
-    case RECEIVE_GITHUB_DATA: 
+    case RECEIVE_GITHUB_DATA:
       return {
         ...state,
         github: {
@@ -48,14 +48,14 @@ export default (state = initObservableInfo, action) => {
           isLoading: false
         }
       };
-    case ERROR_GITHUB_DATA: 
+    case ERROR_GITHUB_DATA:
       return {
         ...state,
         github: {
           error: 'No data'
         }
       };
-    case SEARCH_ANY: 
+    case SEARCH_ANY:
       return {
         ...state,
         calledSearchAny: true
@@ -66,13 +66,13 @@ export default (state = initObservableInfo, action) => {
         projects: [],
         isProjectsLoading: true
       };
-    case RECEIVE_PROJECTS: 
+    case RECEIVE_PROJECTS:
       return {
         ...state,
         projects: action.data,
         isProjectsLoading: false
       };
-    case ERROR_PROJECTS: 
+    case ERROR_PROJECTS:
       return {
         ...state,
         projects: [],
@@ -86,7 +86,6 @@ export default (state = initObservableInfo, action) => {
         }
       };
     case RECEIVE_STACK_DATA:
-      console.log('action', action); 
       return {
         ...state,
         stackoverflow: {
@@ -97,8 +96,7 @@ export default (state = initObservableInfo, action) => {
           isLoading: false
         }
       };
-    case ERROR_STACK_DATA: 
-      console.log('error', action); 
+    case ERROR_STACK_DATA:
       return {
         ...state,
         stackoverflow: {
