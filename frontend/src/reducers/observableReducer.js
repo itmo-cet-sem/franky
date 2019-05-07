@@ -6,7 +6,10 @@ import {
   SEARCH_ANY,
   REQUEST_PROJECTS,
   RECEIVE_PROJECTS,
-  ERROR_PROJECTS
+  ERROR_PROJECTS,
+  RECEIVE_STACK_DATA,
+  REQUEST_STACK_DATA,
+  ERROR_STACK_DATA
 } from '../actions/index';
 
 let initObservableInfo = {
@@ -74,6 +77,33 @@ export default (state = initObservableInfo, action) => {
         ...state,
         projects: [],
         isProjectsLoading: false
+      };
+    case REQUEST_STACK_DATA:
+      return {
+        ...state,
+        stackoverflow: {
+          isLoading: true
+        }
+      };
+    case RECEIVE_STACK_DATA:
+      console.log('action', action); 
+      return {
+        ...state,
+        stackoverflow: {
+          ...state.stackoverflow,
+          login: action.data.login,
+          name: action.data.name,
+          tags: action.data.tags,
+          isLoading: false
+        }
+      };
+    case ERROR_STACK_DATA: 
+      console.log('error', action); 
+      return {
+        ...state,
+        stackoverflow: {
+          error: 'No data'
+        }
       };
     default: 
       return state;

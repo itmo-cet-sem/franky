@@ -60,16 +60,14 @@ export const getFullData = (login) => (dispatch) => {
         ERROR_PROJECTS
       )
     ),
-    // @TODO on ready
-    // dispatch(
-    //   _makeRequest(
-    //     '/api/stackoverflow/',
-    //     login,
-    //     REQUEST_STACK_DATA,
-    //     RECEIVE_STACK_DATA,
-    //     ERROR_STACK_DATA
-    //   )
-    // ),
+    dispatch(
+      _makeRequest(
+        '/api/stackoverflow/' + login,
+        REQUEST_STACK_DATA,
+        RECEIVE_STACK_DATA,
+        ERROR_STACK_DATA
+      )
+    ),
     // dispatch(
     //   _makeRequest(
     //     '/api/dockerhub/',
