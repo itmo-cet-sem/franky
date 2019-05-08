@@ -16,3 +16,7 @@
     margin-right: 4px;
     margin-bottom: 4px;
 }
+
+.timeline-item .timeline-item__title {
+    word-break: break-word;
+}
