@@ -10,9 +10,8 @@ import dockerLogo from './docker-logo.png';
 
 class ActivityInfo extends Component {
   render() {
-    const FEATURE_IMPLEMENTED = false;
     let { info } = this.props;
-    let allErrored = info.github.error && info.stackoverflow.error; // && info.dockerhub.error;
+    let allErrored = info.github.error && info.stackoverflow.error && info.dockerhub.error;
 
     return (
       <div className="activity-info">
@@ -26,7 +25,7 @@ class ActivityInfo extends Component {
         </Paper>
 
         <Grid container spacing={16} alignItems="stretch" className="activity-cards-wrapper">
-          { (allErrored || !info.github.error) && <Grid item xs={12} sm={6}>
+          { (allErrored || !info.github.error) && <Grid item xs={12} sm={4}>
             <ActivityCard
               title="Github Profile"
               logo={githubLogo}
@@ -37,7 +36,7 @@ class ActivityInfo extends Component {
             />
           </Grid>
           }
-          { !info.stackoverflow.error && <Grid item xs={12} sm={6}>
+          { !info.stackoverflow.error && <Grid item xs={12} sm={4}>
             <ActivityCard
               title="Stackoverflow Profile"
               logo={stackLogo}
@@ -48,11 +47,14 @@ class ActivityInfo extends Component {
             />
           </Grid>
           }
-          { FEATURE_IMPLEMENTED && <Grid item xs={12} sm={4}>
+          { !info.dockerhub.error && <Grid item xs={12} sm={4}>
             <ActivityCard
               title="DockerHub Profile"
               logo={dockerLogo}
-              error="@TODO"
+              isLoading={info.dockerhub.isLoading}
+              name={info.dockerhub.name}
+              tags={info.dockerhub.tags}
+              error={info.dockerhub.error}
             />
           </Grid>
           }
