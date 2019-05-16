@@ -12,6 +12,7 @@ class ActivityInfo extends Component {
   render() {
     const FEATURE_IMPLEMENTED = false;
     let { info } = this.props;
+    let allErrored = info.github.error && info.stackoverflow.error; // && info.dockerhub.error;
 
     return (
       <div className="activity-info">
@@ -25,7 +26,7 @@ class ActivityInfo extends Component {
         </Paper>
 
         <Grid container spacing={16} alignItems="stretch" className="activity-cards-wrapper">
-          <Grid item xs={12} sm={4}>
+          { (allErrored || !info.github.error) && <Grid item xs={12} sm={6}>
             <ActivityCard
               title="Github Profile"
               logo={githubLogo}
@@ -35,11 +36,15 @@ class ActivityInfo extends Component {
               error={info.github.error}
             />
           </Grid>
-          { FEATURE_IMPLEMENTED && <Grid item xs={12} sm={4}>
+          }
+          { !info.stackoverflow.error && <Grid item xs={12} sm={6}>
             <ActivityCard
               title="Stackoverflow Profile"
               logo={stackLogo}
-              error="@TODO"
+              isLoading={info.stackoverflow.isLoading}
+              name={info.stackoverflow.name}
+              tags={info.stackoverflow.tags}
+              error={info.stackoverflow.error}
             />
           </Grid>
           }

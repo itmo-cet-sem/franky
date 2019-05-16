@@ -129,6 +129,7 @@ class GitHub(Service):
                             nameWithOwner
                             createdAt
                             pushedAt
+                            homepageUrl
                             languages(first: %(page_size)s) {
                               nodes {
                                 name
@@ -161,8 +162,8 @@ class GitHub(Service):
                     raw_latest_push_date = None
                 tags = list(set(language['name'] for language in repository['languages']['nodes']))
                 if not any(data for data in datas if data.name == repository_name):
-                    datas.append(ProjectData(name=repository_name, start=raw_creation_date,
-                                             end=raw_latest_push_date, tags=tags))
+                    datas.append(ProjectData(name=repository_name, start=raw_creation_date, end=raw_latest_push_date,
+                                             tags=tags, url=repository['homepageUrl'], size=0, pull_count=0, star_count=0))
             cursor = response_user['repositories']['pageInfo']['endCursor']
             if not cursor:
                 break

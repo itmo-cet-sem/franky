@@ -51,15 +51,15 @@ class Timeline extends Component {
       return (
         <VerticalTimelineElement
           key={i}
-          className="vertical-timeline-element--work"
+          className="vertical-timeline-element--work timeline-item"
           date={this._printDate(item.startTime, item.endTime)}
           iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
           icon={<BeenHereIcon />}
         >
-          <h3 className="vertical-timeline-element-title">{item.name.toUpperCase()}</h3>
-          <p>
+          <h3 className="vertical-timeline-element-title timeline-item__title">{item.name.toUpperCase()}</h3>
+          <div>
             { (item.tags && item.tags.length) ? item.tags.map((item, i) => <Chip className="timeline__chip" label={item} key={i} />) : 'No tags' }
-          </p>
+          </div>
         </VerticalTimelineElement>
       );
     });

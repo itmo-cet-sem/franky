@@ -7,7 +7,9 @@ from flask import Flask
 from model import UserData
 from utils import convert_to_json
 from model.project import ProjectData
-from service import GitHub, StackOverflow
+from service import GitHub, StackOverflow, DockerHub
+
+logging.basicConfig(format='[%(asctime)s] %(levelname)s in %(module)s: %(message)s', level=logging.WARN)
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s in %(module)s: %(message)s', level=logging.WARN)
 
@@ -32,6 +34,16 @@ def github_projects(username) -> List[ProjectData]:
 @app.route('/api/stackoverflow/<username>', methods=['GET'])
 def stackoverflow(username):
     return convert_to_json(StackOverflow().user(username))
+
+
+@app.route('/api/dockerhub/<username>', methods=['GET'])
+def dockerhub_user(username) -> UserData:
+    return convert_to_json(DockerHub().user(username))
+
+
+@app.route('/api/dockerhub/<username>/projects', methods=['GET'])
+def dockerhub_projects(username) -> List[ProjectData]:
+    return convert_to_json(DockerHub().projects(username))
 
 
 if __name__ == '__main__':
