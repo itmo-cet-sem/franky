@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import Observe from './containers/Observe/Observe';
 import Header from './components/Header/Header';
 import Description from './components/Description/Description';
+import Motivation from './components/Motivation/Motivation';
 import Footer from './components/Footer/Footer';
 import store from './store';
 import './App.css';
@@ -16,6 +17,7 @@ class App extends Component {
         <Provider store={store}>
           <Observe/>
         </Provider>
+        <Motivation/>
         <Footer/>
       </div>
     );

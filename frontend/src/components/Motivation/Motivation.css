@@ -1,0 +1,25 @@
+.motivation-wrapper {
+    background: url('./home-bg.jpg') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    padding: 70px 20px;
+    z-index: 0
+}
+
+.motivation-wrapper .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #212529;
+    opacity: .5;
+    z-index: 1;
+}
+
+.motivation-wrapper .motivation {
+    color: #fff;
+
+    position: relative;
+    z-index: 2;
+}
