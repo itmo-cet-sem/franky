@@ -7,6 +7,7 @@
     "@material-ui/icons": "^3.0.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-github-btn": "^1.0.5",
     "react-redux": "^6.0.1",
     "react-scripts": "^3.0.0",
     "react-vertical-timeline-component": "^2.3.1",

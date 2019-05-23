@@ -1,5 +1,5 @@
 .footer {
-	background: #282c34;
+	background: linear-gradient(90deg, #0097e0, #06d2b5);
 	padding: 10px;
 }
 
@@ -16,5 +16,5 @@
 }
 
 .footer__app-description {
-	color: #ffffff4f;	
+	color: #ffffff80;	
 }

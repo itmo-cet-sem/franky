@@ -1,6 +1,6 @@
 .header {
   text-align: center;
-  background-color: #282c34;
+  background: radial-gradient(circle at top right, #0097e0, #06d2b5);
   min-height: 100vh;
   display: flex;
   flex-direction: column;

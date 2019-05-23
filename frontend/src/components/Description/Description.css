@@ -1,0 +1,17 @@
+.description-wrapper {
+    background: #0a2b4e;
+    color: #fff;
+}
+
+.description-grid-wrapper {
+    padding: 30px 10px;
+}
+
+.description__item .description__item-icon {
+    font-size: 150px;
+    display: block;
+}
+
+.description-wrapper .description-list {
+    margin-top: 16px;
+}
