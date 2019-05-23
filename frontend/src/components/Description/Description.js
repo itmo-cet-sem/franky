@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Grid } from '@material-ui/core';
-import { PersonPin, Fingerprint, Assignment } from '@material-ui/icons';
+import { PersonPin, Code, Fingerprint, Assignment } from '@material-ui/icons';
 import './Description.css';
 
 class Description extends Component {
@@ -16,36 +16,47 @@ class Description extends Component {
             className="description-grid-wrapper"
           >
             <Grid container spacing={16}  alignItems="stretch" className="description-list">
-              <Grid item xs={12} sm={4} align="center" className="description__item">
+              <Grid item xs={12} sm={3} align="center" className="description__item">
+                <div>
+                  <Code className="description__item-icon" />
+                  <Typography variant="headline"  color="inherit" gutterBottom>
+                    Franky
+                  </Typography>
+                  <Typography variant="body1" color="inherit">
+                    Franky is a service for building employer profile via information in professional activity
+                  </Typography>
+                </div>
+              </Grid>
+              <Grid item xs={12} sm={3} align="center" className="description__item">
                 <div>
                   <PersonPin className="description__item-icon" />
                   <Typography variant="headline"  color="inherit" gutterBottom>
                     Check socials
                   </Typography>
-                  <Typography variant="body1" color="inherit" align="left">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima, laboriosam quos tempore explicabo dolor laborum numquam ipsa neque ut tenetur, ad doloribus nobis atque nulla beatae! Quidem recusandae iure atque.
+                  <Typography variant="body1" color="inherit">
+                    We check your profile in Github, Stackoverflow and Dockerhub
                   </Typography>
                 </div>
               </Grid>
-              <Grid item xs={12} sm={4} align="center" className="description__item">
+              <Grid item xs={12} sm={3} align="center" className="description__item">
                 <div>
                 <Fingerprint className="description__item-icon" />
                 <Typography variant="headline"  color="inherit" gutterBottom>
-                  Input your name
+                  Use it
                 </Typography>
-                <Typography color="inherit" align="left">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima, laboriosam quos tempore explicabo dolor laborum numquam ipsa neque ut tenetur, ad doloribus nobis atque nulla beatae! Quidem recusandae iure atque.
+                <Typography color="inherit">
+                  Input your username in this services
                 </Typography>
                 </div>
               </Grid>
-              <Grid item xs={12} sm={4} align="center" className="description__item">
+              <Grid item xs={12} sm={3} align="center" className="description__item">
                 <div>
                 <Assignment className="description__item-icon" />
                 <Typography variant="headline"  color="inherit" gutterBottom>
                   Show CV!
                 </Typography>
-                <Typography color="inherit" align="left">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima, laboriosam quos tempore explicabo dolor laborum numquam ipsa neque ut tenetur, ad doloribus nobis atque nulla beatae! Quidem recusandae iure atque.
+                <Typography color="inherit">
+                  See agregation of your activity in generated CV
                 </Typography>
                 </div>
               </Grid>
