@@ -1,3 +1,4 @@
+import logging
 from urllib.parse import urljoin
 from typing import Optional, List, Dict
 from datetime import datetime, timedelta
@@ -33,7 +34,7 @@ class DockerHub(Service):
         self._tag_url = 'tags'
         self._repository_url = 'repositories'
         self._tag_indexes = ['os', 'architecture']
-        self._date_format = '%Y-%m-%dT%H:%M:%SZ'
+        self._date_format = '%Y-%m-%dT%H:%M:%S.%fZ'
         self._active_projects_period = timedelta(weeks=2)
         self._page_size = 25
 
@@ -103,11 +104,15 @@ class DockerHub(Service):
                 image = self._get_image(username, image_name)
                 raw_creation_date = size = tags = None
                 if image:
-                    raw_creation_date = self._parse_datetime(image['creation_date'])
+                    raw_creation_date = image['creation_date']
                     size = image['size']
                     tags = list(image['tags'])
-                raw_latest_push_date = self._parse_datetime(repository['last_updated'])
-                if raw_latest_push_date + self._active_projects_period > datetime.utcnow():
+                raw_latest_push_date = repository['last_updated']
+                if not raw_latest_push_date:
+                    logging.warn('Empty repository "%s" is skipped for "%s" user.' % (image_name, username))
+                    continue
+                latest_push_date = self._parse_datetime(raw_latest_push_date)
+                if latest_push_date + self._active_projects_period > datetime.utcnow():
                     raw_latest_push_date = None
                 downloads = repository['pull_count']
                 stars = repository['star_count']
@@ -169,5 +174,4 @@ class DockerHub(Service):
         return '%s/%s/' % (self._url, path)
 
     def _parse_datetime(self, datetime_string) -> datetime:
-        datetime_string = datetime.strptime(datetime_string, '%Y-%m-%dT%H:%M:%S.%fZ').strftime(self._date_format)
         return datetime.strptime(datetime_string, self._date_format)
