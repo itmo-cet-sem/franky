@@ -68,15 +68,14 @@ export const getFullData = (login) => (dispatch) => {
         ERROR_STACK_DATA
       )
     ),
-    // dispatch(
-    //   _makeRequest(
-    //     '/api/dockerhub/',
-    //     login,
-    //     REQUEST_DOCKER_DATA,
-    //     RECEIVE_DOCKER_DATA,
-    //     ERROR_DOCKER_DATA
-    //   )
-    // )
+     dispatch(
+       _makeRequest(
+         '/api/dockerhub/' + login,
+         REQUEST_DOCKER_DATA,
+         RECEIVE_DOCKER_DATA,
+         ERROR_DOCKER_DATA
+       )
+     )
   ]).then((resArr) => {
     dispatch({ type: GET_FULL_DATA_FINISH });
   });
